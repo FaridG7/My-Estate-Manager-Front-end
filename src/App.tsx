@@ -1,5 +1,4 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import Container from "@mui/material/Container";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import AppLayout from "./UI/AppLayout";
@@ -13,13 +12,32 @@ import RentContractsPage from "./pages/RentContractsPage";
 import SaleContractsPage from "./pages/SaleContractsPage";
 import ContractDetailsPage from "./pages/ContractDetailsPage";
 import LoginPage from "./pages/LoginPage";
+import { ThemeProvider, createTheme } from "@mui/material";
+import CssBaseline from "@mui/material/CssBaseline";
 
 const queryClient = new QueryClient();
+const theme = createTheme({
+  palette: {
+    text: {
+      primary: "#454545",
+    },
+    primary: {
+      main: "#3d9970",
+    },
+    secondary:{
+      main:"#8b1c1c"
+    },
+    background: {
+      paper: "#3d9970",
+    },
+  },
+});
 
 const App: React.FC = () => {
   return (
     <QueryClientProvider client={queryClient}>
-      <Container>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
         <BrowserRouter>
           <Routes>
             <Route element={<AppLayout />}>
@@ -38,7 +56,7 @@ const App: React.FC = () => {
             <Route path="*" element={<PageNotFound />} />
           </Routes>
         </BrowserRouter>
-      </Container>
+      </ThemeProvider>
     </QueryClientProvider>
   );
 };

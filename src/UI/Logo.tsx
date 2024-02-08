@@ -1,10 +1,9 @@
 import { Paper } from "@mui/material";
 
-type Props = { forProperty: "sideBar" | "loginPage" };
 
-const Logo: React.FC<Props> = ({ forProperty }) => {
+const Logo: React.FC = () => {
   return (
-    <Paper sx={{ padding: 1, margin: "auto", height:{xs:"100xp",sm:"100%"} }} elevation={0}>
+    <Paper sx={{ padding: 1, margin: "auto"}} elevation={0}>
       <img
         src="src/assets/logo-color.png"
         alt="My Estate Manger Logo"

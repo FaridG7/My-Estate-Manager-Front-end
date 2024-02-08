@@ -14,6 +14,7 @@ import ContractDetailsPage from "./pages/ContractDetailsPage";
 import LoginPage from "./pages/LoginPage";
 import { ThemeProvider, createTheme } from "@mui/material";
 import CssBaseline from "@mui/material/CssBaseline";
+import { Toaster } from "react-hot-toast";
 
 const queryClient = new QueryClient();
 const theme = createTheme({
@@ -56,6 +57,26 @@ const App: React.FC = () => {
             <Route path="*" element={<PageNotFound />} />
           </Routes>
         </BrowserRouter>
+        <Toaster
+          position="top-center"
+          gutter={12}
+          containerStyle={{ margin: "8px" }}
+          toastOptions={{
+            success: {
+              duration: 3000,
+            },
+            error: {
+              duration: 5000,
+            },
+            style: {
+              fontSize: "16px",
+              maxWidth: "500px",
+              padding: "16px 24px",
+              backgroundColor: "#ddd",
+              color: "#454545",
+            },
+          }}
+        />
       </ThemeProvider>
     </QueryClientProvider>
   );

@@ -1,6 +1,9 @@
-export interface PersonObject {
+export interface Manager {
   id: number;
-  firstName: string;
+  accessLevel: number;
+  managerId: string;
+  firstname: string;
   lastName: string;
+  meliCode: string;
   phoneNumber: string;
 }

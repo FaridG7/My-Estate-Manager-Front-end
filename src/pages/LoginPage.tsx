@@ -1,15 +1,6 @@
-import {
-  Box,
-  Button,
-  Divider,
-  FormControl,
-  FormGroup,
-  Grid,
-  Input,
-  InputLabel,
-  Typography,
-} from "@mui/material";
+import { Box, Divider, Grid, Typography } from "@mui/material";
 import Logo from "../UI/Logo";
+import LoginForm from "../features/login/LoginForm";
 
 const LoginPage: React.FC = () => {
   return (
@@ -30,26 +21,15 @@ const LoginPage: React.FC = () => {
       >
         <Grid item xs={12} sm={6}>
           <Box>
-            <Logo forProperty="loginPage" />
+            <Logo />
           </Box>
         </Grid>
         <Grid item xs={12} sm={6}>
           <Typography variant="h2" bgcolor="primary" fontSize={80}>
             Login
           </Typography>
-          <Divider sx={{height:35}}/>
-          <FormGroup>
-            <FormControl sx={{ backgroundColor: "primary.light" }}>
-              <InputLabel htmlFor="manager-id-input">Manager ID</InputLabel>
-              <Input id="manager-id-input" autoFocus />
-            </FormControl>
-            <FormControl sx={{ backgroundColor: "primary.light" }}>
-              <InputLabel htmlFor="password-input">Password</InputLabel>
-              <Input id="password-input" />
-            </FormControl>
-            <Divider sx={{height:25}}/>
-            <Button variant="contained" sx={{backgroundColor:"secondary.main"}}>Sign In</Button>
-          </FormGroup>
+          <Divider sx={{ height: 35 }} />
+          <LoginForm />
         </Grid>
       </Grid>
     </Box>

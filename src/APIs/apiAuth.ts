@@ -24,25 +24,21 @@ export async function login({
   manager_id: string;
   password: string;
 }) {
-  const error = await myNodeJSServer.login(manager_id, password);
-  if (error) throw new Error(error.message);
-
+  await myNodeJSServer.login(manager_id, password);
 }
 
-/*export async function getCurrentUser() {
-  const { data: session } = await supabase.auth.getSession();
-  if (!session.session) return null;
+export async function getCurrentUser() {
+  const isLoggedin = myNodeJSServer.isLoggedin();
+  if (!isLoggedin) return null;
 
-  const { data, error } = await supabase.auth.getUser();
+  const manager = await myNodeJSServer.getCurrentUser();
 
-  if (error) throw new Error(error.message);
-  return data?.user;
-}*/
-/*export async function logout() {
-  const { error } = await supabase.auth.signOut();
-  if (error) throw new Error(error.message);
+  return manager;
 }
-*/
+
+export function logout() {
+  myNodeJSServer.logout();
+}
 
 /*export async function updateCurrentUser({ password, fullName, avatar }) {
   // 1. Update password OR fullName

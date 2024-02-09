@@ -1,3 +1,7 @@
+// import { Manager } from "../types/interfaces";
+
+import { Manager } from "../types/interfaces";
+
 class myServer {
   private token: string | null;
   private authUrl: string;
@@ -14,39 +18,49 @@ class myServer {
     this.token = token;
   }
 
-  public async login(
-    manager_id: string,
-    password: string
-  ): Promise<Error | null> {
-    if (this.token) return null;
-    try {
-      const response = await fetch(this.authUrl + "/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          manager_id,
-          password,
-        }),
-      });
-
-      const { status, token, text } = (await response.json()) as {
-        token: string;
-        text: string;
-        status: number;
-      };
-      if (status === 200) this.setTheToken(token);
-      else throw new Error(text);
-    } catch (error) {
-      return error as Error;
+  public async login(manager_id: string, password: string): Promise<void> {
+    if (this.token) return;
+    const response = await fetch(this.authUrl + "/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        manager_id,
+        password,
+      }),
+    });
+    if (!response.ok) {
+      throw Error(`Failed to get data, status: ${response.status}`);
     }
-    return null;
+    const token = (await response.json()) as string;
+    this.setTheToken(token);
   }
 
   public logout() {
     this.token = null;
     sessionStorage.removeItem("myEstateManagerToken");
+  }
+
+  public isLoggedin() {
+    if (this.token) return true;
+    else return false;
+  }
+
+  public async getCurrentUser() {
+    const response = await fetch(this.baseUrl + "/manager/user", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+
+    if (!response.ok) {
+      throw Error(`Failed to get data, status: ${response.status}`);
+    }
+    const manager = (await response.json()) as Manager;
+    return manager;
   }
 }
 

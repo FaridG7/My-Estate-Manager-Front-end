@@ -15,6 +15,7 @@ import LoginPage from "./pages/LoginPage";
 import { ThemeProvider, createTheme } from "@mui/material";
 import CssBaseline from "@mui/material/CssBaseline";
 import { Toaster } from "react-hot-toast";
+import ProtectedRoute from "./UI/ProtedctedRoute";
 
 const queryClient = new QueryClient();
 const theme = createTheme({
@@ -25,10 +26,11 @@ const theme = createTheme({
     primary: {
       main: "#3d9970",
     },
-    secondary:{
-      main:"#8b1c1c"
+    secondary: {
+      main: "#8b1c1c",
     },
     background: {
+      default:"#cbe0ce",
       paper: "#3d9970",
     },
   },
@@ -41,7 +43,13 @@ const App: React.FC = () => {
         <CssBaseline />
         <BrowserRouter>
           <Routes>
-            <Route element={<AppLayout />}>
+            <Route
+              element={
+                <ProtectedRoute>
+                  <AppLayout />
+                </ProtectedRoute>
+              }
+            >
               <Route index element={<Navigate replace to="home" />} />
               <Route path="home" element={<HomePage />} />
               <Route path="people" element={<PeoplePage />} />

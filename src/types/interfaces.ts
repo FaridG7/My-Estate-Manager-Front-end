@@ -1,9 +1,9 @@
 export interface Manager {
   id: number;
-  accessLevel: number;
-  managerId: string;
-  firstname: string;
-  lastName: string;
-  meliCode: string;
-  phoneNumber: string;
+  access_level: number;
+  manager_id: string;
+  first_name: string;
+  last_name: string;
+  meli_code: string;
+  phone_number: string;
 }

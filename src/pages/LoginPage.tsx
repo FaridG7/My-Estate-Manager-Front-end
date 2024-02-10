@@ -21,7 +21,7 @@ const LoginPage: React.FC = () => {
       >
         <Grid item xs={12} sm={6}>
           <Box>
-            <Logo />
+            <Logo eleveation={0}/>
           </Box>
         </Grid>
         <Grid item xs={12} sm={6}>

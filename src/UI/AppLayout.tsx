@@ -1,15 +1,52 @@
-import { Box, CardHeader } from "@mui/material";
+import { Box, CardHeader, Drawer, IconButton } from "@mui/material";
+import { useState } from "react";
 import { Outlet } from "react-router-dom";
+import MenuIcon from "@mui/icons-material/Menu";
 
-const AppLayout:React.FC = ()=> {
+import Logo from "./Logo";
+import SideBarList from "./SIdeBarList";
+
+const AppLayout: React.FC = () => {
+  const [toggleSideBar, setToggleSideBar] = useState<boolean>(false);
+
+  const handleToggle = () => {
+    setToggleSideBar((state) => !state);
+  };
+
   return (
     <>
-    <CardHeader/>
+      <CardHeader
+        title="Header"
+        avatar={
+          <IconButton onClick={handleToggle} sx={{ bgcolor: "primary.main" }}>
+            <MenuIcon />
+          </IconButton>
+        }
+      />
+
+      <Drawer
+        anchor={"left"}
+        open={toggleSideBar}
+        onClose={handleToggle}
+        PaperProps={{
+          sx: {
+            width: {
+              xs: "200px",
+              sm: "300px",
+            },
+          },
+        }}
+      >
+        <Box>
+          <Logo eleveation={10}/>
+        </Box>
+        <SideBarList />
+      </Drawer>
       <Box>
-        <Outlet/>
+        <Outlet />
       </Box>
     </>
   );
-}
+};
 
 export default AppLayout;

@@ -1,6 +1,5 @@
-// import { Manager } from "../types/interfaces";
+import { Manager, Person } from "../types/interfaces";
 
-import { Manager } from "../types/interfaces";
 
 class myServer {
   private token: string | null;
@@ -61,6 +60,21 @@ class myServer {
     }
     const manager = (await response.json()) as Manager;
     return manager;
+  }
+  public async getPeople(){
+    const response = await fetch(this.baseUrl + "/people", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+
+    if (!response.ok) {
+      throw Error(`Failed to get data, status: ${response.status}`);
+    }
+    const people = (await response.json()) as Person[];
+    return people;
   }
 }
 

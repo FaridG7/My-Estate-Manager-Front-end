@@ -4,7 +4,7 @@ import { Outlet } from "react-router-dom";
 import MenuIcon from "@mui/icons-material/Menu";
 
 import Logo from "./Logo";
-import SideBarList from "./SIdeBarList";
+import SideBarList from "./SideBarList";
 
 const AppLayout: React.FC = () => {
   const [toggleSideBar, setToggleSideBar] = useState<boolean>(false);
@@ -14,7 +14,7 @@ const AppLayout: React.FC = () => {
   };
 
   return (
-    <>
+    <Box sx={{height:"100vh"}}>
       <CardHeader
         title="Header"
         avatar={
@@ -42,10 +42,10 @@ const AppLayout: React.FC = () => {
         </Box>
         <SideBarList />
       </Drawer>
-      <Box>
+      <Box sx={{minHeight:"500px"}}>
         <Outlet />
       </Box>
-    </>
+    </Box>
   );
 };
 

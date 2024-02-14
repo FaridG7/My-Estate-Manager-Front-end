@@ -14,7 +14,7 @@ const AppLayout: React.FC = () => {
   };
 
   return (
-    <Box sx={{height:"100vh"}}>
+    <Box sx={{ height: "100vh" }}>
       <CardHeader
         title="Header"
         avatar={
@@ -38,11 +38,15 @@ const AppLayout: React.FC = () => {
         }}
       >
         <Box>
-          <Logo eleveation={10}/>
+          <Logo eleveation={10} />
         </Box>
         <SideBarList />
       </Drawer>
-      <Box sx={{minHeight:"500px"}}>
+      <Box
+        sx={{
+          minHeight: "500px",
+        }}
+      >
         <Outlet />
       </Box>
     </Box>

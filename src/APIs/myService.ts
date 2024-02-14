@@ -1,6 +1,5 @@
 import { Manager, Person } from "../types/interfaces";
 
-
 class myServer {
   private token: string | null;
   private authUrl: string;
@@ -61,7 +60,8 @@ class myServer {
     const manager = (await response.json()) as Manager;
     return manager;
   }
-  public async getPeople(){
+  
+  public async getPeople() {
     const response = await fetch(this.baseUrl + "/people", {
       method: "GET",
       headers: {
@@ -76,6 +76,112 @@ class myServer {
     const people = (await response.json()) as Person[];
     return people;
   }
+  public async getOwners() {
+    const response = await fetch(this.baseUrl + "/people/owners", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+
+    if (!response.ok) {
+      throw Error(`Failed to get data, status: ${response.status}`);
+    }
+    const people = (await response.json()) as Person[];
+    return people;
+  }
+  public async getBuyers() {
+    const response = await fetch(this.baseUrl + "/people/buyers", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+
+    if (!response.ok) {
+      throw Error(`Failed to get data, status: ${response.status}`);
+    }
+    const people = (await response.json()) as Person[];
+    return people;
+  }
+  public async getRenters() {
+    const response = await fetch(this.baseUrl + "/people/renters", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+
+    if (!response.ok) {
+      throw Error(`Failed to get data, status: ${response.status}`);
+    }
+    const people = (await response.json()) as Person[];
+    return people;
+  }
+  public async getPerson(id: number) {
+    const response = await fetch(this.baseUrl + `/people/${id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+
+    if (!response.ok) {
+      throw Error(`Failed to get data, status: ${response.status}`);
+    }
+    const people = (await response.json()) as Person;
+    return people;
+  }
+  public async insertPerson(newPerson: Person) {
+    const response = await fetch(this.baseUrl + "/people", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+      body: JSON.stringify(newPerson),
+    });
+
+    if (!response.ok) {
+      throw Error(`Failed to get data, status: ${response.status}`);
+    }
+  }
+  public async updatePerson(updatedPerson: Person) {
+    const { id } = updatedPerson;
+    if (!id) throw Error("There should be an id in the object");
+    const response = await fetch(this.baseUrl + `/people/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+      body: JSON.stringify(updatedPerson),
+    });
+
+    if (!response.ok) {
+      throw Error(`Failed to get data, status: ${response.status}`);
+    }
+  }
+  public async deletePErson(id: number) {
+    if (!id) throw Error("There should be an id in the object");
+    const response = await fetch(this.baseUrl + `/people/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+
+    if (!response.ok) {
+      throw Error(`Failed to get data, status: ${response.status}`);
+    }
+  }
+
+
 }
 
 const myNodeJSServer = new myServer(

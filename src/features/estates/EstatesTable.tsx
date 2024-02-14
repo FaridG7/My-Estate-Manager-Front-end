@@ -1,60 +1,53 @@
-// import {
-//   GridColDef,
-//   GridEventListener,
-// //   GridValueGetterParams,
-// } from "@mui/x-data-grid";
-// import Table from "../../UI/Table";
-// import usePeople from "./useEstates";
-// import { Box, CircularProgress, Typography } from "@mui/material";
+import { GridColDef, GridEventListener } from "@mui/x-data-grid";
+import { Box, CircularProgress, Typography } from "@mui/material";
 
-// const columns: GridColDef[] = [
-//   { field: "id", headerName: "ID", width: 80 },
-//   { field: "first_name", headerName: "First name", width: 150 },
-//   { field: "last_name", headerName: "Last name", width: 150 },
-//   { field: "meli_code", headerName: "Meli Code", width: 150 },
-//   { field: "phone_number", headerName: "Phone Number", width: 150 },
-//   { field: "role", headerName: "Role", width: 150 },
-// //   {
-// //     field: "age",
-// //     headerName: "Age",
-// //     type: "number",
-// //     width: 90,
-// //   },
-// //   {
-// //     field: "fullName",
-// //     headerName: "Full name",
-// //     description: "This column has a value getter and is not sortable.",
-// //     sortable: false,
-// //     width: 160,
-// //     valueGetter: (params: GridValueGetterParams) =>
-// //       `${params.row.firstName || ""} ${params.row.lastName || ""}`,
-// //   },
-// ];
+import Table from "../../UI/Table";
+import { useIdleEstates, useRentedEstates, useSoldEstates } from "./useEstates";
 
+const columns: GridColDef[] = [
+  { field: "id", headerName: "ID", width: 80, type: "number" },
+  { field: "property_id", headerName: "Peoperty ID", width: 120 },
+  { field: "type", headerName: "Type", width: 120 },
+  { field: "area", headerName: "Area", width: 100, type: "number" },
+  { field: "room_count", headerName: "Room Count", width: 100, type: "number" },
+  { field: "for", headerName: "For", width: 70 },
+  { field: "price", headerName: "Price", width: 100, type: "number" },
+  { field: "mortgage", headerName: "Mortgage", width: 130, type: "number" },
+  { field: "rent", headerName: "Rent", width: 130, type: "number" },
+  { field: "registration_date", headerName: "Created At", width: 120 },
+];
 
-// const PeopleTable: React.FC = () => {
-//   const  { isLoading, people } = usePeople();
-//   const handleRowClick: GridEventListener<"rowClick"> | undefined = (e) => {
-//     console.log(e);
-//   };
-  
-//   if (isLoading)
-//     return (
-//       <Box
-//         display="flex"
-//         justifyContent="center"
-//         alignItems="center"
-//         sx={{ height: "100%", width: "100%" }}
-//       >
-//         <Typography variant="h2">Loading...</Typography>
-//         <CircularProgress size={120} />
-//       </Box>
-//     );
+const EstatesTable: React.FC<{ caseNumber: 1 | 2 | 3 }> = ({ caseNumber }) => {
+  const { isLoading: isLoading1, idleEstates } = useIdleEstates();
+  const { isLoading: isLoading2, soldEstates } = useSoldEstates();
+  const { isLoading: isLoading3, rentedEstates } = useRentedEstates();
 
+  const rows = [idleEstates, soldEstates, rentedEstates];
 
-//   return (
-//     <Table rows={people || []} columns={columns} handleRowClick={handleRowClick} />
-//   );
-// };
+  const handleRowClick: GridEventListener<"rowClick"> | undefined = (e) => {
+    console.log(e);
+  };
 
-// export default PeopleTable;
+  if (isLoading1 || isLoading2 || isLoading3)
+    return (
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        sx={{ height: "100%", width: "100%" }}
+      >
+        <Typography variant="h2">Loading...</Typography>
+        <CircularProgress size={120} />
+      </Box>
+    );
+
+  return (
+    <Table
+      rows={rows[caseNumber - 1] ?? []}
+      columns={columns}
+      handleRowClick={handleRowClick}
+    />
+  );
+};
+
+export default EstatesTable;

@@ -13,6 +13,7 @@ export interface Manager extends Person {
 }
 
 export interface Estate {
+  id: number;
   property_id: string;
   owner_id: number;
   address: string;
@@ -27,9 +28,9 @@ export interface Estate {
   room_count: number;
   description: string;
   for: "rent" | "sale" | "any";
-  price: number;
-  mortgage: number;
-  rent: number;
+  price: number | null;
+  mortgage: number | null;
+  rent: number | null;
   registration_date: Date;
 }
 export type Rows = Person | Manager | Estate;

@@ -1,4 +1,4 @@
-import { Manager, Person } from "../types/interfaces";
+import { Estate, Manager, Person } from "../types/interfaces";
 
 class myServer {
   private token: string | null;
@@ -60,7 +60,7 @@ class myServer {
     const manager = (await response.json()) as Manager;
     return manager;
   }
-  
+
   public async getPeople() {
     const response = await fetch(this.baseUrl + "/people", {
       method: "GET",
@@ -166,8 +166,8 @@ class myServer {
       throw Error(`Failed to get data, status: ${response.status}`);
     }
   }
-  public async deletePErson(id: number) {
-    if (!id) throw Error("There should be an id in the object");
+  public async deletePerson(id: number) {
+    if (!id) throw Error("There should be an id");
     const response = await fetch(this.baseUrl + `/people/${id}`, {
       method: "DELETE",
       headers: {
@@ -181,7 +181,110 @@ class myServer {
     }
   }
 
+  public async getIdleEstates() {
+    const response = await fetch(this.baseUrl + "/estates/idle", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
 
+    if (!response.ok) {
+      throw Error(`Failed to get data, status: ${response.status}`);
+    }
+    const idleEstates = (await response.json()) as Estate[];
+    return idleEstates;
+  }
+  public async getSoldEstates() {
+    const response = await fetch(this.baseUrl + "/estates/sold", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+
+    if (!response.ok) {
+      throw Error(`Failed to get data, status: ${response.status}`);
+    }
+    const soldEstates = (await response.json()) as Estate[];
+    return soldEstates;
+  }
+  public async getRentedEstates() {
+    const response = await fetch(this.baseUrl + "/estates/rented", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+
+    if (!response.ok) {
+      throw Error(`Failed to get data, status: ${response.status}`);
+    }
+    const rentedEstates = (await response.json()) as Estate[];
+    return rentedEstates;
+  }
+  public async getEstate(id: number) {
+    const response = await fetch(this.baseUrl + `/estates/${id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+
+    if (!response.ok) {
+      throw Error(`Failed to get data, status: ${response.status}`);
+    }
+    const rentedEstates = (await response.json()) as Estate[];
+    return rentedEstates;
+  }
+  public async insertEstate(newEstate: Estate) {
+    const response = await fetch(this.baseUrl + "/estates", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+      body: JSON.stringify(newEstate),
+    });
+
+    if (!response.ok) {
+      throw Error(`Failed to get data, status: ${response.status}`);
+    }
+  }
+  public async updateEstate(updatedEstate: Estate) {
+    const { id } = updatedEstate;
+    if (!id) throw Error("There should be an id in the object");
+    const response = await fetch(this.baseUrl + `/estates/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+      body: JSON.stringify(updatedEstate),
+    });
+
+    if (!response.ok) {
+      throw Error(`Failed to get data, status: ${response.status}`);
+    }
+  }
+  public async deleteEstate(id: number) {
+    if (!id) throw Error("There should be an id");
+    const response = await fetch(this.baseUrl + `/estates/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+
+    if (!response.ok) {
+      throw Error(`Failed to get data, status: ${response.status}`);
+    }
+  }
 }
 
 const myNodeJSServer = new myServer(

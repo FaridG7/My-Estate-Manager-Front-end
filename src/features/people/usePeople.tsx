@@ -16,7 +16,7 @@ export function usePeople() {
 }
 export function useOwners() {
   const { isLoading, data: owners } = useQuery({
-    queryKey: ["people"],
+    queryKey: ["owners"],
     queryFn: getOwners,
   });
 
@@ -24,7 +24,7 @@ export function useOwners() {
 }
 export function useBuyers() {
   const { isLoading, data: buyers } = useQuery({
-    queryKey: ["people"],
+    queryKey: ["buyers"],
     queryFn: getBuyers,
   });
 
@@ -32,7 +32,7 @@ export function useBuyers() {
 }
 export function useRenters() {
   const { isLoading, data: renters } = useQuery({
-    queryKey: ["people"],
+    queryKey: ["renters"],
     queryFn: getRenters,
   });
 

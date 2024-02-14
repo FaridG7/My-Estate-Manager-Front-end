@@ -5,12 +5,11 @@ import Table from "../../UI/Table";
 import { useBuyers, useOwners, usePeople, useRenters } from "./usePeople";
 
 const columns: GridColDef[] = [
-  { field: "id", headerName: "ID", width: 80 },
+  { field: "id", headerName: "ID", width: 80, type: "number" },
   { field: "first_name", headerName: "First name", width: 150 },
   { field: "last_name", headerName: "Last name", width: 150 },
   { field: "meli_code", headerName: "Meli Code", width: 150 },
   { field: "phone_number", headerName: "Phone Number", width: 150 },
-  // { field: "role", headerName: "Role", width: 150 },
 ];
 
 const PeopleTable: React.FC<{ caseNumber: 0 | 1 | 2 | 3 }> = ({

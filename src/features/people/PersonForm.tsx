@@ -11,7 +11,7 @@ import { useCreatePerson } from "./useCreatePerson";
 import { SubmitHandler, useForm } from "react-hook-form";
 
 type Props = {
-  onClose: any;
+  onClose: () => void;
   person?: Person;
 };
 
@@ -21,7 +21,6 @@ const PersonForm: React.FC<Props> = ({ person = {}, onClose }) => {
   const { register, handleSubmit, reset } = useForm<Omit<Person, "id">>({
     defaultValues: person as Omit<Person, "id">,
   });
-  // const { errors } = formState;
 
   const onSubmit: SubmitHandler<Omit<Person, "id">> = (data) => {
     createPerson(
@@ -34,16 +33,11 @@ const PersonForm: React.FC<Props> = ({ person = {}, onClose }) => {
       }
     );
   };
-
-  // function onError(errors) {
-  //   console.log(errors);
-  // }
-
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <FormGroup>
         <FormControl sx={{ backgroundColor: "primary.light" }}>
-          <InputLabel htmlFor="firstName">First Name</InputLabel>
+          <InputLabel htmlFor="firstName">First Name*</InputLabel>
           <Input
             id="firstName"
             autoFocus
@@ -51,28 +45,16 @@ const PersonForm: React.FC<Props> = ({ person = {}, onClose }) => {
           />
         </FormControl>
         <FormControl sx={{ backgroundColor: "primary.light" }}>
-          <InputLabel htmlFor="lastName">Last Name</InputLabel>
-          <Input
-            id="lastName"
-            autoFocus
-            {...register("last_name", { required: true })}
-          />
+          <InputLabel htmlFor="lastName">Last Name*</InputLabel>
+          <Input id="lastName" {...register("last_name", { required: true })} />
         </FormControl>
         <FormControl sx={{ backgroundColor: "primary.light" }}>
-          <InputLabel htmlFor="meliCode">Meli Code</InputLabel>
-          <Input
-            id="meliCode"
-            autoFocus
-            {...register("meli_code", { required: true })}
-          />
+          <InputLabel htmlFor="meliCode">Meli Code*</InputLabel>
+          <Input id="meliCode" {...register("meli_code", { required: true })} />
         </FormControl>
         <FormControl sx={{ backgroundColor: "primary.light" }}>
           <InputLabel htmlFor="phoneNumber">Phone Number</InputLabel>
-          <Input
-            id="phonenUmber"
-            autoFocus
-            {...register("phone_number", { required: true })}
-          />
+          <Input id="phoneNumber" {...register("phone_number")} />
         </FormControl>
         <Divider sx={{ height: 25 }} />
         <Button

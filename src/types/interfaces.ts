@@ -16,8 +16,8 @@ export interface Estate {
   id: number;
   property_id: string;
   owner_id: number;
-  address: string;
-  geo_location: string;
+  address?: string;
+  geo_location?: string;
   type:
     | "residential"
     | "commercial"
@@ -26,11 +26,11 @@ export interface Estate {
     | "special purpose";
   area: number;
   room_count: number;
-  description: string;
+  description?: string;
   for: "rent" | "sale" | "any";
-  price: number | null;
-  mortgage: number | null;
-  rent: number | null;
+  price?: number;
+  mortgage?: number;
+  rent?: number;
   registration_date: Date;
 }
 
@@ -56,4 +56,9 @@ export interface RentContract extends Contract {
   renter_id: number;
 }
 
-export type Rows = Person[] | Manager[] | Estate[] | SaleContract[] | RentContract[];
+export type Rows =
+  | Person[]
+  | Manager[]
+  | Estate[]
+  | SaleContract[]
+  | RentContract[];

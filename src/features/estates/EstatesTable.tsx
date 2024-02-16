@@ -1,9 +1,17 @@
 import { GridColDef, GridEventListener } from "@mui/x-data-grid";
-import { Box, CircularProgress, Typography } from "@mui/material";
+import {
+  Button,
+  ButtonGroup,
+  Divider,
+  Box,
+  CircularProgress,
+  Typography,
+} from "@mui/material";
 
 import Table from "../../UI/Table";
 import useEstates from "./useEstates";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 const columns: GridColDef[] = [
   { field: "id", headerName: "ID", width: 80, type: "number" },
@@ -18,7 +26,8 @@ const columns: GridColDef[] = [
   { field: "registration_date", headerName: "Created At", width: 120 },
 ];
 
-const EstatesTable: React.FC<{ caseNumber: 1 | 2 | 3 }> = ({ caseNumber }) => {
+const EstatesTable: React.FC = () => {
+  const [activeButton, setActiveButton] = useState<1 | 2 | 3>(1);
   const { isLoading, idleEstates, soldEstates, rentedEstates } = useEstates();
   const nav = useNavigate();
 
@@ -42,11 +51,40 @@ const EstatesTable: React.FC<{ caseNumber: 1 | 2 | 3 }> = ({ caseNumber }) => {
     );
 
   return (
-    <Table
-      rows={rows[caseNumber - 1] ?? []}
-      columns={columns}
-      handleRowClick={handleRowClick}
-    />
+    <>
+      <ButtonGroup>
+        <Button
+          variant={activeButton === 1 ? "contained" : "outlined"}
+          onClick={() => {
+            setActiveButton(1);
+          }}
+        >
+          Idle Estates
+        </Button>
+        <Button
+          variant={activeButton === 2 ? "contained" : "outlined"}
+          onClick={() => {
+            setActiveButton(2);
+          }}
+        >
+          Sold Estates
+        </Button>
+        <Button
+          variant={activeButton === 3 ? "contained" : "outlined"}
+          onClick={() => {
+            setActiveButton(3);
+          }}
+        >
+          Rented Estates
+        </Button>
+      </ButtonGroup>
+      <Divider sx={{ height: 25 }} />
+      <Table
+        rows={rows[activeButton - 1] ?? []}
+        columns={columns}
+        handleRowClick={handleRowClick}
+      />
+    </>
   );
 };
 

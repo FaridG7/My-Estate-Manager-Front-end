@@ -1,39 +1,27 @@
-import { Button, ButtonGroup, Divider } from "@mui/material";
 import PeopleTable from "../features/people/PeopleTable";
 import { useState } from "react";
+import PersonForm from "../features/people/PersonForm";
+import { Button } from "@mui/material";
 
 const PeoplePage: React.FC = () => {
-  const [activeButton, setActiveButton] = useState<1 | 2 | 3>(1);
+  const [activeCase, setActiveCase] = useState<1 | 2>(1);
+  const open = () => {
+    setActiveCase(2);
+  };
+  const close = () => {
+    setActiveCase(1);
+  };
   return (
     <>
-      <ButtonGroup>
-        <Button
-          variant={activeButton === 1 ? "contained" : "outlined"}
-          onClick={() => {
-            setActiveButton(1);
-          }}
-        >
-          Owners
-        </Button>
-        <Button
-          variant={activeButton === 2 ? "contained" : "outlined"}
-          onClick={() => {
-            setActiveButton(2);
-          }}
-        >
-          Buyers
-        </Button>
-        <Button
-          variant={activeButton === 3 ? "contained" : "outlined"}
-          onClick={() => {
-            setActiveButton(3);
-          }}
-        >
-          Renters
-        </Button>
-      </ButtonGroup>
-      <Divider sx={{ height: 25 }} />
-      <PeopleTable caseNumber={activeButton} />
+      {activeCase === 1 && (
+        <>
+          <PeopleTable />
+          <Button onClick={open} variant="contained">
+            Open Create Form
+          </Button>
+        </>
+      )}
+      {activeCase === 2 && <PersonForm onClose={close} />}
     </>
   );
 };

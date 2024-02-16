@@ -22,7 +22,7 @@ export async function getEstate(id: number) {
   return renters;
 }
 
-export async function insertEstate(newEstate: Omit<Estate, "id">) {
+export async function insertEstate(newEstate: Omit<Estate, "id"|"registration_date">) {
   await myNodeJSServer.insertEstate(newEstate);
 }
 export async function updateEstate(updatedEstate: Estate) {

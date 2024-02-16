@@ -143,6 +143,7 @@ class myServer {
     return people;
   }
   public async insertPerson(newPerson: Omit<Person, "id">) {
+    console.log("insertPerson: ", newPerson);
     const response = await fetch(this.baseUrl + "/people", {
       method: "POST",
       headers: {
@@ -153,7 +154,7 @@ class myServer {
     });
 
     if (!response.ok) {
-      throw Error(`Failed to get data, status: ${response.status}`);
+      throw Error(`Failed to create new person, status: ${response.status}`);
     }
   }
   public async updatePerson(updatedPerson: Person) {
@@ -247,7 +248,9 @@ class myServer {
     const rentedEstates = (await response.json()) as Estate;
     return rentedEstates;
   }
-  public async insertEstate(newEstate: Omit<Estate, "id">) {
+  public async insertEstate(
+    newEstate: Omit<Estate, "id" | "registration_date">
+  ) {
     const response = await fetch(this.baseUrl + "/estates", {
       method: "POST",
       headers: {

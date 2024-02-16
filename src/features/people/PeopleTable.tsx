@@ -1,9 +1,11 @@
 import { GridColDef, GridEventListener } from "@mui/x-data-grid";
 import { Box, CircularProgress, Typography } from "@mui/material";
+import { Button, ButtonGroup, Divider } from "@mui/material";
 
 import Table from "../../UI/Table";
 import usePeople from "./usePeople";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 const columns: GridColDef[] = [
   { field: "id", headerName: "ID", width: 80, type: "number" },
@@ -13,9 +15,8 @@ const columns: GridColDef[] = [
   { field: "phone_number", headerName: "Phone Number", width: 150 },
 ];
 
-const PeopleTable: React.FC<{ caseNumber: 0 | 1 | 2 | 3 }> = ({
-  caseNumber,
-}) => {
+const PeopleTable: React.FC = () => {
+  const [activeButton, setActiveButton] = useState<1 | 2 | 3>(1);
   const { isLoading, people, owners, buyers, renters } = usePeople();
   const nav = useNavigate();
   const rows = [people, owners, buyers, renters];
@@ -37,11 +38,40 @@ const PeopleTable: React.FC<{ caseNumber: 0 | 1 | 2 | 3 }> = ({
     );
 
   return (
-    <Table
-      rows={rows[caseNumber] ?? []}
-      columns={columns}
-      handleRowClick={handleRowClick}
-    />
+    <>
+      <ButtonGroup>
+        <Button
+          variant={activeButton === 1 ? "contained" : "outlined"}
+          onClick={() => {
+            setActiveButton(1);
+          }}
+        >
+          Owners
+        </Button>
+        <Button
+          variant={activeButton === 2 ? "contained" : "outlined"}
+          onClick={() => {
+            setActiveButton(2);
+          }}
+        >
+          Buyers
+        </Button>
+        <Button
+          variant={activeButton === 3 ? "contained" : "outlined"}
+          onClick={() => {
+            setActiveButton(3);
+          }}
+        >
+          Renters
+        </Button>
+      </ButtonGroup>
+      <Divider sx={{ height: 25 }} />
+      <Table
+        rows={rows[activeButton] ?? []}
+        columns={columns}
+        handleRowClick={handleRowClick}
+      />
+    </>
   );
 };
 

@@ -9,7 +9,7 @@ export function useCreatePerson() {
     mutationFn: insertPerson,
     onSuccess: () => {
       toast.success("Person Created Successfully");
-      queryClient.invalidateQueries({ queryKey: ["people"] });
+      queryClient.invalidateQueries({ queryKey: ["people","owners","buyers","renters"] });
     },
     onError: (err) => toast.error(err.message),
   });

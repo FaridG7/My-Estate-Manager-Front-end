@@ -1,24 +1,28 @@
 import { GridColDef, GridEventListener } from "@mui/x-data-grid";
 import { Box, CircularProgress, Typography } from "@mui/material";
 
-import Table from "../../UI/Table";
-import usePeople from "./usePeople";
+import Table from "../../../UI/Table";
+import useSaleContracts from "./useSaleContracts";
 import { useNavigate } from "react-router-dom";
 
 const columns: GridColDef[] = [
   { field: "id", headerName: "ID", width: 80, type: "number" },
-  { field: "first_name", headerName: "First name", width: 150 },
-  { field: "last_name", headerName: "Last name", width: 150 },
-  { field: "meli_code", headerName: "Meli Code", width: 150 },
-  { field: "phone_number", headerName: "Phone Number", width: 150 },
+  { field: "contract_id", headerName: "Title", width: 150 },
+  { field: "estate_id", headerName: "Estate", width: 120, type: "number" },
+  {
+    field: "commission_fee",
+    headerName: "Commission Fee",
+    width: 100,
+    type: "number",
+  },
+  { field: "sale_date", headerName: "Sale Date", width: 100, type: "date" },
+  { field: "price", headerName: "Price", width: 130, type: "number" },
 ];
 
-const PeopleTable: React.FC<{ caseNumber: 0 | 1 | 2 | 3 }> = ({
-  caseNumber,
-}) => {
-  const { isLoading, people, owners, buyers, renters } = usePeople();
+const SaleContractsTable: React.FC = () => {
+  const { isLoading, saleContracts } = useSaleContracts();
   const nav = useNavigate();
-  const rows = [people, owners, buyers, renters];
+
   const handleRowClick: GridEventListener<"rowClick"> | undefined = (e) => {
     nav(`${e.id}`);
   };
@@ -38,11 +42,11 @@ const PeopleTable: React.FC<{ caseNumber: 0 | 1 | 2 | 3 }> = ({
 
   return (
     <Table
-      rows={rows[caseNumber] ?? []}
+      rows={saleContracts ?? []}
       columns={columns}
       handleRowClick={handleRowClick}
     />
   );
 };
 
-export default PeopleTable;
+export default SaleContractsTable;

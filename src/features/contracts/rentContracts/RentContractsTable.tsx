@@ -1,28 +1,29 @@
 import { GridColDef, GridEventListener } from "@mui/x-data-grid";
 import { Box, CircularProgress, Typography } from "@mui/material";
 
-import Table from "../../UI/Table";
-import useEstates from "./useEstates";
+import Table from "../../../UI/Table";
+import useRentContracts from "./useRentContracts";
 import { useNavigate } from "react-router-dom";
 
 const columns: GridColDef[] = [
   { field: "id", headerName: "ID", width: 80, type: "number" },
-  { field: "property_id", headerName: "Peoperty ID", width: 120 },
-  { field: "type", headerName: "Type", width: 120 },
-  { field: "area", headerName: "Area", width: 100, type: "number" },
-  { field: "room_count", headerName: "Room Count", width: 100, type: "number" },
-  { field: "for", headerName: "For", width: 70 },
-  { field: "price", headerName: "Price", width: 100, type: "number" },
+  { field: "contract_id", headerName: "Title", width: 150 },
+  { field: "estate_id", headerName: "Estate", width: 120, type: "number" },
+  {
+    field: "commission_fee",
+    headerName: "Commission Fee",
+    width: 100,
+    type: "number",
+  },
+  { field: "start_date", headerName: "Start Date", width: 100, type: "date" },
+  { field: "expire_date", headerName: "Expire Date", width: 100, type: "date" },
   { field: "mortgage", headerName: "Mortgage", width: 130, type: "number" },
   { field: "rent", headerName: "Rent", width: 130, type: "number" },
-  { field: "registration_date", headerName: "Created At", width: 120 },
 ];
 
-const EstatesTable: React.FC<{ caseNumber: 1 | 2 | 3 }> = ({ caseNumber }) => {
-  const { isLoading, idleEstates, soldEstates, rentedEstates } = useEstates();
+const RentContractsTable: React.FC = () => {
+  const { isLoading, rentContracts } = useRentContracts();
   const nav = useNavigate();
-
-  const rows = [idleEstates, soldEstates, rentedEstates];
 
   const handleRowClick: GridEventListener<"rowClick"> | undefined = (e) => {
     nav(`${e.id}`);
@@ -43,11 +44,11 @@ const EstatesTable: React.FC<{ caseNumber: 1 | 2 | 3 }> = ({ caseNumber }) => {
 
   return (
     <Table
-      rows={rows[caseNumber - 1] ?? []}
+      rows={rentContracts ?? []}
       columns={columns}
       handleRowClick={handleRowClick}
     />
   );
 };
 
-export default EstatesTable;
+export default RentContractsTable;

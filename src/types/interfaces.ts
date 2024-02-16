@@ -33,4 +33,27 @@ export interface Estate {
   rent: number | null;
   registration_date: Date;
 }
-export type Rows = Person | Manager | Estate;
+
+interface Contract {
+  id: number;
+  contract_id: string;
+  estate_id: number;
+  manager_id: number;
+  commission_fee: number;
+}
+
+export interface SaleContract extends Contract {
+  sale_date: Date;
+  price: number;
+  buyer_id: number;
+}
+
+export interface RentContract extends Contract {
+  start_date: Date;
+  expire_date: Date;
+  mortgage: number;
+  rent: number;
+  renter_id: number;
+}
+
+export type Rows = Person[] | Manager[] | Estate[] | SaleContract[] | RentContract[];

@@ -16,7 +16,6 @@ export type LoginObject = {
 
 const LoginForm: React.FC = () => {
   const { login, isPending } = useLogin();
-
   const {
     register,
     handleSubmit,

@@ -1,13 +1,14 @@
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
+import SaleContractsTable from "../features/contracts/saleContracts/SaleContractsTable";
 
 const SaleContractsPage: React.FC = () => {
   return (
     <>
       <Box>
-        <Typography>Sale contracts page</Typography>
+        <SaleContractsTable />
       </Box>
     </>
   );
-}
+};
 
 export default SaleContractsPage;

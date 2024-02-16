@@ -5,27 +5,25 @@ import {
   getSoldEstates,
 } from "../../APIs/estatesAPI";
 
-export function useIdleEstates() {
-  const { isLoading, data: idleEstates } = useQuery({
+function useEstates() {
+  const { isLoading: isLoading1, data: idleEstates } = useQuery({
     queryKey: ["idleEstates"],
     queryFn: getIdleEstates,
   });
-
-  return { isLoading, idleEstates };
-}
-export function useSoldEstates() {
-  const { isLoading, data: soldEstates } = useQuery({
+  const { isLoading: isLoading2, data: soldEstates } = useQuery({
     queryKey: ["soldEstates"],
     queryFn: getSoldEstates,
   });
-
-  return { isLoading, soldEstates };
-}
-export function useRentedEstates() {
-  const { isLoading, data: rentedEstates } = useQuery({
+  const { isLoading: isLoading3, data: rentedEstates } = useQuery({
     queryKey: ["rentedEstates"],
     queryFn: getRentedEstates,
   });
 
-  return { isLoading, rentedEstates };
+  return {
+    isLoading: isLoading1 || isLoading2 || isLoading3,
+    idleEstates,
+    soldEstates,
+    rentedEstates,
+  };
 }
+export default useEstates;

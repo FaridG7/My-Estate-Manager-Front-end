@@ -10,12 +10,13 @@ import EstatesPage from "./pages/EstatesPage";
 import EstateDetailsPage from "./pages/EstateDetailsPage";
 import RentContractsPage from "./pages/RentContractsPage";
 import SaleContractsPage from "./pages/SaleContractsPage";
-import ContractDetailsPage from "./pages/ContractDetailsPage";
 import LoginPage from "./pages/LoginPage";
 import { ThemeProvider, createTheme } from "@mui/material";
 import CssBaseline from "@mui/material/CssBaseline";
 import { Toaster } from "react-hot-toast";
 import ProtectedRoute from "./UI/ProtedctedRoute";
+import RentContractDetailsPage from "./pages/RentContractDetailsPage";
+import SaleContractDetailsPage from "./pages/SaleContractDetailsPage";
 
 const queryClient = new QueryClient();
 const theme = createTheme({
@@ -30,7 +31,7 @@ const theme = createTheme({
       main: "#8b1c1c",
     },
     background: {
-      default:"#cbe0ce",
+      default: "#cbe0ce",
       paper: "#3d9970",
     },
   },
@@ -58,7 +59,14 @@ const App: React.FC = () => {
               <Route path="estates/:id" element={<EstateDetailsPage />} />
               <Route path="contracts/rent" element={<RentContractsPage />} />
               <Route path="contracts/sale" element={<SaleContractsPage />} />
-              <Route path="contracts/:id" element={<ContractDetailsPage />} />
+              <Route
+                path="contracts/rent/:id"
+                element={<RentContractDetailsPage />}
+              />
+              <Route
+                path="contracts/sale/:id"
+                element={<SaleContractDetailsPage />}
+              />
             </Route>
             <Route path="login" element={<LoginPage />} />
 

@@ -1,4 +1,10 @@
-import { Estate, Manager, Person } from "../types/interfaces";
+import {
+  Estate,
+  Manager,
+  Person,
+  RentContract,
+  SaleContract,
+} from "../types/interfaces";
 
 class myServer {
   private token: string | null;
@@ -136,7 +142,7 @@ class myServer {
     const people = (await response.json()) as Person;
     return people;
   }
-  public async insertPerson(newPerson: Person) {
+  public async insertPerson(newPerson: Omit<Person, "id">) {
     const response = await fetch(this.baseUrl + "/people", {
       method: "POST",
       headers: {
@@ -238,10 +244,10 @@ class myServer {
     if (!response.ok) {
       throw Error(`Failed to get data, status: ${response.status}`);
     }
-    const rentedEstates = (await response.json()) as Estate[];
+    const rentedEstates = (await response.json()) as Estate;
     return rentedEstates;
   }
-  public async insertEstate(newEstate: Estate) {
+  public async insertEstate(newEstate: Omit<Estate, "id">) {
     const response = await fetch(this.baseUrl + "/estates", {
       method: "POST",
       headers: {
@@ -274,6 +280,152 @@ class myServer {
   public async deleteEstate(id: number) {
     if (!id) throw Error("There should be an id");
     const response = await fetch(this.baseUrl + `/estates/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+
+    if (!response.ok) {
+      throw Error(`Failed to get data, status: ${response.status}`);
+    }
+  }
+
+  public async getSaleContract(id: number) {
+    const response = await fetch(this.baseUrl + `/contracts/sale/${id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+
+    if (!response.ok) {
+      throw Error(`Failed to get data, status: ${response.status}`);
+    }
+    const saleContract = (await response.json()) as SaleContract;
+    return saleContract;
+  }
+  public async getSaleContracts() {
+    const response = await fetch(this.baseUrl + `/contracts/sale/`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+
+    if (!response.ok) {
+      throw Error(`Failed to get data, status: ${response.status}`);
+    }
+    const saleContract = (await response.json()) as SaleContract[];
+    return saleContract;
+  }
+  public async insertSaleContract(newSaleContract: Omit<SaleContract, "id">) {
+    const response = await fetch(this.baseUrl + `/contracts/sale`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+      body: JSON.stringify(newSaleContract),
+    });
+
+    if (!response.ok) {
+      throw Error(`Failed to get data, status: ${response.status}`);
+    }
+  }
+  public async updateSaleContracts(updatedSaleContract: SaleContract) {
+    const { id } = updatedSaleContract;
+    const response = await fetch(this.baseUrl + `/contracts/sale/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+      body: JSON.stringify(updatedSaleContract),
+    });
+
+    if (!response.ok) {
+      throw Error(`Failed to get data, status: ${response.status}`);
+    }
+  }
+  public async deleteSaleContract(id: number) {
+    const response = await fetch(this.baseUrl + `/contracts/sale/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+
+    if (!response.ok) {
+      throw Error(`Failed to get data, status: ${response.status}`);
+    }
+  }
+
+  public async getRentContract(id: number) {
+    const response = await fetch(this.baseUrl + `/contracts/rent/${id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+
+    if (!response.ok) {
+      throw Error(`Failed to get data, status: ${response.status}`);
+    }
+    const saleContract = (await response.json()) as RentContract;
+    return saleContract;
+  }
+  public async getRentContracts() {
+    const response = await fetch(this.baseUrl + `/contracts/rent/`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+
+    if (!response.ok) {
+      throw Error(`Failed to get data, status: ${response.status}`);
+    }
+    const saleContract = (await response.json()) as RentContract[];
+    return saleContract;
+  }
+  public async insertRentContract(newRentContract: Omit<RentContract, "id">) {
+    const response = await fetch(this.baseUrl + `/contracts/rent`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+      body: JSON.stringify(newRentContract),
+    });
+
+    if (!response.ok) {
+      throw Error(`Failed to get data, status: ${response.status}`);
+    }
+  }
+  public async updateRentContracts(updatedrentContract: RentContract) {
+    const { id } = updatedrentContract;
+    const response = await fetch(this.baseUrl + `/contracts/rent/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+      body: JSON.stringify(updatedrentContract),
+    });
+
+    if (!response.ok) {
+      throw Error(`Failed to get data, status: ${response.status}`);
+    }
+  }
+  public async deleteRentContract(id: number) {
+    const response = await fetch(this.baseUrl + `/contracts/rent/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",

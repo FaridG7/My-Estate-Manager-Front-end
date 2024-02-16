@@ -3,7 +3,7 @@ import { DataGrid, GridColDef, GridEventListener } from "@mui/x-data-grid";
 import { Rows } from "../types/interfaces";
 
 type Props = {
-  rows: Rows[];
+  rows: Rows;
   columns: GridColDef[];
   handleRowClick: GridEventListener<"rowClick"> | undefined;
 };

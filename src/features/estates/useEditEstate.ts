@@ -10,7 +10,13 @@ export default function useEditEstate() {
     onSuccess: () => {
       toast.success("Estate Editted Successfully");
       queryClient.invalidateQueries({
-        queryKey: ["idleEstates", "soldEstates", "rentedEstate", "estate"],
+        queryKey: [
+          "idleEstates",
+          "soldEstates",
+          "rentedEstate",
+          "estate",
+          "owners",
+        ],
       });
     },
     onError: (err) => toast.error(err.message),

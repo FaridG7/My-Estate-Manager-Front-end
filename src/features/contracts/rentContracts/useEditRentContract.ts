@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-hot-toast";
 import { updateRentContract } from "../../../APIs/contractsAPI";
 
-export default function useEditSaleContract() {
+export default function useEditRentContract() {
   const queryClient = useQueryClient();
 
   const { mutate: editRentContract, isPending: isEditting } = useMutation({

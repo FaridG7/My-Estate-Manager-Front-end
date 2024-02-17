@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-hot-toast";
 import { insertRentContract } from "../../../APIs/contractsAPI";
 
-export default function useCreateSaleContract() {
+export default function useCreateRentContract() {
   const queryClient = useQueryClient();
 
   const { mutate: createRentContract, isPending: isCreating } = useMutation({

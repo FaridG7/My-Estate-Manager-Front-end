@@ -7,10 +7,13 @@ import {
 } from "@mui/material";
 import { Link, useParams } from "react-router-dom";
 import useRentContract from "../features/contracts/rentContracts/useRentContract";
+import { useState } from "react";
+import RentForm from "../features/contracts/rentContracts/RentForm";
 
 const RentContractDetailsPage: React.FC = () => {
   const { id } = useParams();
-  const { isLoading, contract } = useRentContract(Number(id),);
+  const { isLoading, contract } = useRentContract(Number(id));
+  const [mode, setMode] = useState<"edit" | "show">("show");
 
   if (isLoading)
     return (
@@ -35,6 +38,8 @@ const RentContractDetailsPage: React.FC = () => {
         <Typography variant="h2">Something went wrong</Typography>
       </Box>
     );
+  if (mode === "edit")
+    return <RentForm rentContract={contract} onClose={() => setMode("show")} />;
   const {
     contract_id,
     estate_id,
@@ -74,7 +79,9 @@ const RentContractDetailsPage: React.FC = () => {
             <Typography>{`Commission Fee: ${commission_fee}`}</Typography>
           </Stack>
           <Stack direction="row">
-            <Button variant="contained">Edit</Button>
+            <Button variant="contained" onClick={() => setMode("edit")}>
+              Edit
+            </Button>
             <Button variant="contained">Delete</Button>
           </Stack>
         </Stack>

@@ -10,7 +10,7 @@ export default function useCreateEstate() {
     onSuccess: () => {
       toast.success("Estate Created Successfully");
       queryClient.invalidateQueries({
-        queryKey: ["idleEstates", "soldEstates", "rentedEstate"],
+        queryKey: ["idleEstates", "soldEstates", "rentedEstate","owners"],
       });
     },
     onError: (err) => toast.error(err.message),

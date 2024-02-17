@@ -17,7 +17,7 @@ type Props = {
   person?: Person;
 };
 
-const SaleForm: React.FC<Props> = ({ person, onClose }) => {
+const PersonForm: React.FC<Props> = ({ person, onClose }) => {
   const { isCreating, createPerson } = useCreatePerson();
   const { isEditting, editPerson } = useEditPerson();
   const isLoading = isCreating || isEditting;
@@ -117,4 +117,4 @@ const SaleForm: React.FC<Props> = ({ person, onClose }) => {
   );
 };
 
-export default SaleForm;
+export default PersonForm;

@@ -7,8 +7,11 @@ import {
 } from "@mui/material";
 import { useParams } from "react-router-dom";
 import usePerson from "../features/people/usePerson";
+import { useState } from "react";
+import PersonForm from "../features/people/PersonForm";
 
 const PersonDetailsPage: React.FC = () => {
+  const [mode, setMode] = useState<"edit" | "show">("show");
   const { id } = useParams();
   const { isLoading, person } = usePerson(Number(id));
 
@@ -35,25 +38,27 @@ const PersonDetailsPage: React.FC = () => {
         <Typography variant="h2">Something went wrong</Typography>
       </Box>
     );
+  if (mode === "edit")
+    return <PersonForm person={person} onClose={() => setMode("show")} />;
   const { first_name, last_name, meli_code, phone_number } = person;
   return (
-    <>
-      <Box>
-        <Stack direction="column">
-          <Stack direction="row">
-            <Typography variant="h2">{`${first_name} ${last_name}`}</Typography>
-          </Stack>
-          <Stack direction="row">
-            <Typography >{`Meli Code: ${meli_code}`}</Typography>
-            <Typography >{`Phone Number: ${phone_number}`}</Typography>
-          </Stack>
-          <Stack direction="row">
-            <Button variant="contained">Edit</Button>
-            <Button variant="contained">Delete</Button>
-          </Stack>
+    <Box>
+      <Stack direction="column">
+        <Stack direction="row">
+          <Typography variant="h2">{`${first_name} ${last_name}`}</Typography>
         </Stack>
-      </Box>
-    </>
+        <Stack direction="row">
+          <Typography>{`Meli Code: ${meli_code}`}</Typography>
+          <Typography>{`Phone Number: ${phone_number}`}</Typography>
+        </Stack>
+        <Stack direction="row">
+          <Button variant="contained" onClick={() => setMode("edit")}>
+            Edit
+          </Button>
+          <Button variant="contained">Delete</Button>
+        </Stack>
+      </Stack>
+    </Box>
   );
 };
 

@@ -1,10 +1,19 @@
-import { Box, Button, CircularProgress, Stack, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  CircularProgress,
+  Stack,
+  Typography,
+} from "@mui/material";
 import { Link, useParams } from "react-router-dom";
 import useEstate from "../features/estates/useEstate";
+import { useState } from "react";
+import EstateForm from "../features/estates/EstateForm";
 
 const EstateDetailsPage: React.FC = () => {
   const { id } = useParams();
   const { isLoading, estate } = useEstate(Number(id));
+  const [mode, setMode] = useState<"edit" | "show">("show");
 
   if (isLoading)
     return (
@@ -29,6 +38,8 @@ const EstateDetailsPage: React.FC = () => {
         <Typography variant="h2">Something went wrong</Typography>
       </Box>
     );
+  if (mode === "edit")
+    return <EstateForm estate={estate} onClose={() => setMode("show")} />;
   const {
     property_id,
     owner_id,
@@ -53,7 +64,7 @@ const EstateDetailsPage: React.FC = () => {
           </Stack>
           <Stack direction="row">
             <Link to={`/people/${owner_id}`}>
-            <Typography>{`Owner ID: ${owner_id}`}</Typography>
+              <Typography>{`Owner ID: ${owner_id}`}</Typography>
             </Link>
             <Typography>{`Registration Date: ${registration_date}`}</Typography>
           </Stack>
@@ -78,7 +89,14 @@ const EstateDetailsPage: React.FC = () => {
             <Typography>{`Rent: ${rent ? rent : "-"}`}</Typography>
           </Stack>
           <Stack direction="row">
-            <Button variant="contained">Edit</Button>
+            <Button
+              variant="contained"
+              onClick={() => {
+                setMode("edit");
+              }}
+            >
+              Edit
+            </Button>
             <Button variant="contained">Delete</Button>
           </Stack>
         </Stack>

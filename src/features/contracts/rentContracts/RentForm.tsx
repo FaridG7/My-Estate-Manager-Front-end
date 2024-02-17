@@ -15,8 +15,8 @@ import {
   TextField,
 } from "@mui/material";
 import { SubmitHandler, useForm } from "react-hook-form";
-import useCreateSaleContract from "./useCreateRentContract";
-import useEditSaleContract from "./useEditRentContract";
+import useCreateRentContract from "./useCreateRentContract";
+import useEditRentContract from "./useEditRentContract";
 import { RentContract } from "../../../types/interfaces";
 import useIdleEstates from "../../estates/useIdleEstates";
 import usePeople from "../../people/usePeople";
@@ -26,9 +26,9 @@ type Props = {
   rentContract?: RentContract;
 };
 
-const SaleForm: React.FC<Props> = ({ rentContract, onClose }) => {
-  const { isCreating, createRentContract } = useCreateSaleContract();
-  const { isEditting, editRentContract } = useEditSaleContract();
+const RentForm: React.FC<Props> = ({ rentContract, onClose }) => {
+  const { isCreating, createRentContract } = useCreateRentContract();
+  const { isEditting, editRentContract } = useEditRentContract();
   const { isLoading: isEstatesLoading, idleEstates } = useIdleEstates();
   const { isLoading: isPeopleLoading, people } = usePeople();
   const isLoading =
@@ -248,4 +248,4 @@ const SaleForm: React.FC<Props> = ({ rentContract, onClose }) => {
   );
 };
 
-export default SaleForm;
+export default RentForm;

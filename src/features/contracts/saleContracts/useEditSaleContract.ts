@@ -10,7 +10,7 @@ export default function useEditSaleContract() {
     onSuccess: () => {
       toast.success("Person Edited Successfully");
       queryClient.invalidateQueries({
-        queryKey: ["saleContracts", "saleContract"],
+        queryKey: ["saleContracts", "saleContract", "soldEstates", "buyers"],
       });
     },
     onError: (err) => toast.error(err.message),

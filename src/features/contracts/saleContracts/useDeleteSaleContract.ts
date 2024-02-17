@@ -1,14 +1,14 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-hot-toast";
-import { updateSaleContract } from "../../../APIs/contractsAPI";
+import { deleteSaleContract as deleteSaleContractAPI } from "../../../APIs/contractsAPI";
 
-export default function useEditSaleContract() {
+export default function useDeleteSaleContract() {
   const queryClient = useQueryClient();
 
-  const { mutate: editSaleContract, isPending: isEditting } = useMutation({
-    mutationFn: updateSaleContract,
+  const { mutate: deleteSaleContract, isPending: isDeleting } = useMutation({
+    mutationFn: deleteSaleContractAPI,
     onSuccess: () => {
-      toast.success("Person Edited Successfully");
+      toast.success("Contract Deleted Successfully");
       queryClient.invalidateQueries({
         queryKey: [
           "saleContracts",
@@ -22,5 +22,5 @@ export default function useEditSaleContract() {
     onError: (err) => toast.error(err.message),
   });
 
-  return { isEditting, editSaleContract };
+  return { isDeleting, deleteSaleContract };
 }

@@ -9,11 +9,13 @@ import { Link, useParams } from "react-router-dom";
 import useRentContract from "../features/contracts/rentContracts/useRentContract";
 import { useState } from "react";
 import RentForm from "../features/contracts/rentContracts/RentForm";
+import useDeleteRentContract from "../features/contracts/rentContracts/useDeleteRentContract";
 
 const RentContractDetailsPage: React.FC = () => {
   const { id } = useParams();
   const { isLoading, contract } = useRentContract(Number(id));
   const [mode, setMode] = useState<"edit" | "show">("show");
+  const { isDeleting, deleteRentContract } = useDeleteRentContract();
 
   if (isLoading)
     return (
@@ -82,7 +84,15 @@ const RentContractDetailsPage: React.FC = () => {
             <Button variant="contained" onClick={() => setMode("edit")}>
               Edit
             </Button>
-            <Button variant="contained">Delete</Button>
+            <Button
+              variant="contained"
+              disabled={isDeleting}
+              onClick={() => {
+                deleteRentContract(contract.id);
+              }}
+            >
+              Delete
+            </Button>
           </Stack>
         </Stack>
       </Box>

@@ -9,11 +9,13 @@ import { Link, useParams } from "react-router-dom";
 import useSaleContract from "../features/contracts/saleContracts/useContract";
 import { useState } from "react";
 import SaleForm from "../features/contracts/saleContracts/SaleForm";
+import useDeleteSaleContract from "../features/contracts/saleContracts/useDeleteSaleContract";
 
 const SaleContractDetailsPage: React.FC = () => {
   const { id } = useParams();
   const { isLoading, contract } = useSaleContract(Number(id));
   const [mode, setMode] = useState<"edit" | "show">("show");
+  const { isDeleting, deleteSaleContract } = useDeleteSaleContract();
 
   if (isLoading)
     return (
@@ -76,7 +78,15 @@ const SaleContractDetailsPage: React.FC = () => {
             <Button variant="contained" onClick={() => setMode("edit")}>
               Edit
             </Button>
-            <Button variant="contained">Delete</Button>
+            <Button
+              variant="contained"
+              disabled={isDeleting}
+              onClick={() => {
+                deleteSaleContract(contract.id);
+              }}
+            >
+              Delete
+            </Button>
           </Stack>
         </Stack>
       </Box>

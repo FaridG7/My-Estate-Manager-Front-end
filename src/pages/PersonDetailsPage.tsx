@@ -9,11 +9,13 @@ import { useParams } from "react-router-dom";
 import usePerson from "../features/people/usePerson";
 import { useState } from "react";
 import PersonForm from "../features/people/PersonForm";
+import useDeletePerson from "../features/people/useDeletePerson";
 
 const PersonDetailsPage: React.FC = () => {
   const [mode, setMode] = useState<"edit" | "show">("show");
   const { id } = useParams();
   const { isLoading, person } = usePerson(Number(id));
+  const { isDeleting, deletePerson } = useDeletePerson();
 
   if (isLoading)
     return (
@@ -55,7 +57,15 @@ const PersonDetailsPage: React.FC = () => {
           <Button variant="contained" onClick={() => setMode("edit")}>
             Edit
           </Button>
-          <Button variant="contained">Delete</Button>
+          <Button
+            variant="contained"
+            disabled={isDeleting}
+            onClick={() => {
+              deletePerson(person.id);
+            }}
+          >
+            Delete
+          </Button>
         </Stack>
       </Stack>
     </Box>

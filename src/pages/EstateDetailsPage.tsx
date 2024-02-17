@@ -9,11 +9,13 @@ import { Link, useParams } from "react-router-dom";
 import useEstate from "../features/estates/useEstate";
 import { useState } from "react";
 import EstateForm from "../features/estates/EstateForm";
+import useDeleteEstate from "../features/estates/useDeleteEstate";
 
 const EstateDetailsPage: React.FC = () => {
   const { id } = useParams();
   const { isLoading, estate } = useEstate(Number(id));
   const [mode, setMode] = useState<"edit" | "show">("show");
+  const { isDeleting, deleteEstate } = useDeleteEstate();
 
   if (isLoading)
     return (
@@ -97,7 +99,15 @@ const EstateDetailsPage: React.FC = () => {
             >
               Edit
             </Button>
-            <Button variant="contained">Delete</Button>
+            <Button
+              variant="contained"
+              disabled={isDeleting}
+              onClick={() => {
+                deleteEstate(estate.id);
+              }}
+            >
+              Delete
+            </Button>
           </Stack>
         </Stack>
       </Box>

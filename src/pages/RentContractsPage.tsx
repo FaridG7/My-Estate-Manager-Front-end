@@ -1,4 +1,4 @@
-import { Box, Button } from "@mui/material";
+import { Button } from "@mui/material";
 import RentContractsTable from "../features/contracts/rentContracts/RentContractsTable";
 import { useState } from "react";
 import RentForm from "../features/contracts/rentContracts/RentForm";
@@ -15,10 +15,8 @@ const RentContractsPage: React.FC = () => {
     <>
       {activeCase === 1 && (
         <>
-          <Box>
-            <RentContractsTable />
-          </Box>
-          <Button onClick={open} variant="contained" >
+          <RentContractsTable />
+          <Button onClick={open} variant="contained">
             Open Create Form
           </Button>
         </>

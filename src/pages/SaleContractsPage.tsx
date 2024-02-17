@@ -1,4 +1,4 @@
-import { Box, Button } from "@mui/material";
+import { Button } from "@mui/material";
 import SaleContractsTable from "../features/contracts/saleContracts/SaleContractsTable";
 import { useState } from "react";
 import SaleForm from "../features/contracts/saleContracts/SaleForm";
@@ -15,9 +15,7 @@ const SaleContractsPage: React.FC = () => {
     <>
       {activeCase === 1 && (
         <>
-          <Box>
-            <SaleContractsTable />
-          </Box>
+          <SaleContractsTable />
           <Button onClick={open} variant="contained">
             Open Create Form
           </Button>

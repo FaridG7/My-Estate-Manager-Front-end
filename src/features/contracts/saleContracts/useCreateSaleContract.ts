@@ -10,7 +10,13 @@ export default function useCreateSaleContract() {
     onSuccess: () => {
       toast.success("Contract Created Successfully");
       queryClient.invalidateQueries({
-        queryKey: ["saleContracts", "saleContract", "soldEstates", "buyers"],
+        queryKey: [
+          "saleContracts",
+          "saleContract",
+          "soldEstates",
+          "idleEstates",
+          "buyers",
+        ],
       });
     },
     onError: (err) => toast.error(err.message),

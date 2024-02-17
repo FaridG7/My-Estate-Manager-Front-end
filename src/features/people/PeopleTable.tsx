@@ -17,9 +17,9 @@ const columns: GridColDef[] = [
 
 const PeopleTable: React.FC = () => {
   const [activeButton, setActiveButton] = useState<1 | 2 | 3>(1);
-  const { isLoading, people, owners, buyers, renters } = usePeople();
+  const { isLoading, owners, buyers, renters } = usePeople();
   const nav = useNavigate();
-  const rows = [people, owners, buyers, renters];
+  const rows = [owners, buyers, renters];
   const handleRowClick: GridEventListener<"rowClick"> | undefined = (e) => {
     nav(`${e.id}`);
   };
@@ -67,7 +67,7 @@ const PeopleTable: React.FC = () => {
       </ButtonGroup>
       <Divider sx={{ height: 25 }} />
       <Table
-        rows={rows[activeButton] ?? []}
+        rows={rows[activeButton - 1] ?? []}
         columns={columns}
         handleRowClick={handleRowClick}
       />

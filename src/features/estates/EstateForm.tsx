@@ -6,6 +6,7 @@ import {
   Divider,
   FormControl,
   FormGroup,
+  FormHelperText,
   Input,
   InputLabel,
   MenuItem,
@@ -21,6 +22,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import useCreateEstate from "./useCreateEstate";
 import { Estate } from "../../types/interfaces";
 import usePeople from "../people/usePeople";
+import useEditEstate from "./useEditEstate";
 
 type Props = {
   onClose: () => void;
@@ -41,28 +43,44 @@ const forOptions: { value: string; lable: string }[] = [
   { value: "any", lable: "Any" },
 ];
 
-const EstateForm: React.FC<Props> = ({ estate = {}, onClose }) => {
+const EstateForm: React.FC<Props> = ({ estate, onClose }) => {
   const { isCreating, createEstate } = useCreateEstate();
-  const { isLoading, people } = usePeople();
+  const { isEditting, editEstate } = useEditEstate();
+  const { isLoading: isPeopleLoading, people } = usePeople();
+  const isLoading = isCreating || isEditting || isPeopleLoading;
+  const isEdit = !!estate;
 
-  const { register, handleSubmit, reset } = useForm<
+  const { register, handleSubmit, reset, formState } = useForm<
     Omit<Estate, "id" | "registration_date">
   >({
     defaultValues: estate as Omit<Estate, "id" | "registration_date">,
   });
+  const { errors } = formState;
 
   const onSubmit: SubmitHandler<Omit<Estate, "id" | "registration_date">> = (
     data
   ) => {
-    createEstate(
-      { ...data },
-      {
-        onSuccess: () => {
-          reset();
-          onClose?.();
-        },
-      }
-    );
+    if (isEdit) {
+      editEstate(
+        { ...data, id: estate.id },
+        {
+          onSuccess: () => {
+            reset();
+            onClose?.();
+          },
+        }
+      );
+    } else {
+      createEstate(
+        { ...data },
+        {
+          onSuccess: () => {
+            reset();
+            onClose?.();
+          },
+        }
+      );
+    }
   };
 
   if (isLoading)
@@ -87,7 +105,9 @@ const EstateForm: React.FC<Props> = ({ estate = {}, onClose }) => {
             id="propertyId"
             autoFocus
             {...register("property_id", { required: true })}
+            error={!!errors.property_id}
           />
+          <FormHelperText>{errors.property_id?.message}</FormHelperText>
         </FormControl>
         <FormControl sx={{ backgroundColor: "primary.light" }}>
           <Autocomplete
@@ -119,17 +139,32 @@ const EstateForm: React.FC<Props> = ({ estate = {}, onClose }) => {
               </li>
             )}
             renderInput={(params) => (
-              <TextField {...params} label="Choose the owner" />
+              <TextField
+                {...params}
+                label="Choose the owner"
+                error={!!errors.owner_id}
+                helperText={errors.owner_id?.message}
+              />
             )}
           />
         </FormControl>
         <FormControl sx={{ backgroundColor: "primary.light" }}>
           <InputLabel htmlFor="address">Address</InputLabel>
-          <Input id="address" {...register("address")} />
+          <Input
+            id="address"
+            {...register("address")}
+            error={!!errors.property_id}
+          />
+          <FormHelperText>{errors.address?.message}</FormHelperText>
         </FormControl>
         <FormControl sx={{ backgroundColor: "primary.light" }}>
           <InputLabel htmlFor="geo_location">Geo Location</InputLabel>
-          <Input id="geo_location" {...register("geo_location")} />
+          <Input
+            id="geo_location"
+            {...register("geo_location")}
+            error={!!errors.property_id}
+          />
+          <FormHelperText>{errors.geo_location?.message}</FormHelperText>
         </FormControl>
         <FormControl sx={{ backgroundColor: "primary.light" }}>
           <TextField
@@ -137,6 +172,8 @@ const EstateForm: React.FC<Props> = ({ estate = {}, onClose }) => {
             select
             {...register("type", { required: true })}
             label="Type*"
+            error={!!errors.type}
+            helperText={errors.type?.message}
           >
             {typeOptions.map((option) => (
               <MenuItem key={option.value} value={option.value}>
@@ -151,6 +188,8 @@ const EstateForm: React.FC<Props> = ({ estate = {}, onClose }) => {
             select
             {...register("for", { required: true })}
             label="For*"
+            error={!!errors.for}
+            helperText={errors.for?.message}
           >
             {forOptions.map((option) => (
               <MenuItem key={option.value} value={option.value}>
@@ -164,16 +203,32 @@ const EstateForm: React.FC<Props> = ({ estate = {}, onClose }) => {
           <Input
             id="area"
             type="number"
-            {...register("area", { required: true })}
+            error={!!errors.property_id}
+            {...register("area", {
+              required: true,
+              min: {
+                value: 1,
+                message: "Area should be at least 1",
+              },
+            })}
           />
+          <FormHelperText>{errors.area?.message}</FormHelperText>
         </FormControl>
         <FormControl sx={{ backgroundColor: "primary.light" }}>
           <InputLabel htmlFor="room_count">Room Count*</InputLabel>
           <Input
             id="room_count"
             type="number"
-            {...register("room_count", { required: true })}
+            error={!!errors.property_id}
+            {...register("room_count", {
+              required: true,
+              min: {
+                value: 1,
+                message: "Room Count should be at least 1",
+              },
+            })}
           />
+          <FormHelperText>{errors.room_count?.message}</FormHelperText>
         </FormControl>
         <FormControl sx={{ backgroundColor: "primary.light" }}>
           <TextField
@@ -181,28 +236,49 @@ const EstateForm: React.FC<Props> = ({ estate = {}, onClose }) => {
             type="number"
             {...register("description")}
             label="Description"
+            error={!!errors.description}
+            helperText={errors.description?.message}
           />
         </FormControl>
         <FormControl sx={{ backgroundColor: "primary.light" }}>
           <InputLabel htmlFor="price">Price</InputLabel>
-          <Input id="price" type="number" {...register("price")} />
+          <Input
+            id="price"
+            type="number"
+            {...register("price")}
+            error={!!errors.property_id}
+          />
+          <FormHelperText>{errors.price?.message}</FormHelperText>
         </FormControl>
         <FormControl sx={{ backgroundColor: "primary.light" }}>
           <InputLabel htmlFor="mortgage">Mortgage</InputLabel>
-          <Input id="mortgage" type="number" {...register("mortgage")} />
+          <Input
+            id="mortgage"
+            type="number"
+            {...register("mortgage")}
+            error={!!errors.property_id}
+          />
+          <FormHelperText>{errors.mortgage?.message}</FormHelperText>
         </FormControl>
         <FormControl sx={{ backgroundColor: "primary.light" }}>
           <InputLabel htmlFor="rent">Rent</InputLabel>
-          <Input id="rent" type="number" {...register("rent")} />
+          <Input
+            id="rent"
+            type="number"
+            {...register("rent")}
+            error={!!errors.property_id}
+          />
+          <FormHelperText>{errors.rent?.message}</FormHelperText>
         </FormControl>
 
         <Divider sx={{ height: 25 }} />
+
         <Button
           variant="contained"
           sx={{ backgroundColor: "secondary.main" }}
           type="reset"
           onClick={() => onClose?.()}
-          disabled={isCreating}
+          disabled={isLoading}
         >
           Cancel
         </Button>
@@ -210,7 +286,7 @@ const EstateForm: React.FC<Props> = ({ estate = {}, onClose }) => {
           variant="contained"
           sx={{ backgroundColor: "secondary.main" }}
           type="submit"
-          disabled={isCreating}
+          disabled={isLoading}
         >
           Create
         </Button>

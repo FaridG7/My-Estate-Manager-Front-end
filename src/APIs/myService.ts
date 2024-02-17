@@ -264,7 +264,7 @@ class myServer {
       throw Error(`Failed to get data, status: ${response.status}`);
     }
   }
-  public async updateEstate(updatedEstate: Estate) {
+  public async updateEstate(updatedEstate: Omit<Estate, "registration_date">) {
     const { id } = updatedEstate;
     if (!id) throw Error("There should be an id in the object");
     const response = await fetch(this.baseUrl + `/estates/${id}`, {
@@ -325,7 +325,9 @@ class myServer {
     const saleContract = (await response.json()) as SaleContract[];
     return saleContract;
   }
-  public async insertSaleContract(newSaleContract: Omit<SaleContract, "id">) {
+  public async insertSaleContract(
+    newSaleContract: Omit<SaleContract, "id" | "manager_id">
+  ) {
     const response = await fetch(this.baseUrl + `/contracts/sale`, {
       method: "POST",
       headers: {
@@ -339,7 +341,9 @@ class myServer {
       throw Error(`Failed to get data, status: ${response.status}`);
     }
   }
-  public async updateSaleContracts(updatedSaleContract: SaleContract) {
+  public async updateSaleContract(
+    updatedSaleContract: Omit<SaleContract, "manager_id">
+  ) {
     const { id } = updatedSaleContract;
     const response = await fetch(this.baseUrl + `/contracts/sale/${id}`, {
       method: "PUT",
@@ -398,7 +402,9 @@ class myServer {
     const saleContract = (await response.json()) as RentContract[];
     return saleContract;
   }
-  public async insertRentContract(newRentContract: Omit<RentContract, "id">) {
+  public async insertRentContract(
+    newRentContract: Omit<RentContract, "id" | "manager_id">
+  ) {
     const response = await fetch(this.baseUrl + `/contracts/rent`, {
       method: "POST",
       headers: {
@@ -412,7 +418,9 @@ class myServer {
       throw Error(`Failed to get data, status: ${response.status}`);
     }
   }
-  public async updateRentContracts(updatedrentContract: RentContract) {
+  public async updateRentContract(
+    updatedrentContract: Omit<RentContract, "manager_id">
+  ) {
     const { id } = updatedrentContract;
     const response = await fetch(this.baseUrl + `/contracts/rent/${id}`, {
       method: "PUT",

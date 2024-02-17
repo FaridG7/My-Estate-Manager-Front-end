@@ -3,35 +3,56 @@ import {
   Divider,
   FormControl,
   FormGroup,
+  FormHelperText,
   Input,
   InputLabel,
 } from "@mui/material";
 import { Person } from "../../types/interfaces";
-import { useCreatePerson } from "./useCreatePerson";
+import useCreatePerson from "./useCreatePerson";
 import { SubmitHandler, useForm } from "react-hook-form";
+import useEditPerson from "./useEditPerson";
 
 type Props = {
   onClose: () => void;
   person?: Person;
 };
 
-const PersonForm: React.FC<Props> = ({ person = {}, onClose }) => {
+const SaleForm: React.FC<Props> = ({ person, onClose }) => {
   const { isCreating, createPerson } = useCreatePerson();
+  const { isEditting, editPerson } = useEditPerson();
+  const isLoading = isCreating || isEditting;
+  const isEdit = !!person;
 
-  const { register, handleSubmit, reset } = useForm<Omit<Person, "id">>({
+  const { register, handleSubmit, reset, formState } = useForm<
+    Omit<Person, "id">
+  >({
     defaultValues: person as Omit<Person, "id">,
   });
 
+  const { errors } = formState;
+
   const onSubmit: SubmitHandler<Omit<Person, "id">> = (data) => {
-    createPerson(
-      { ...data },
-      {
-        onSuccess: () => {
-          reset();
-          onClose?.();
-        },
-      }
-    );
+    if (isEdit) {
+      editPerson(
+        { ...data, id: person.id },
+        {
+          onSuccess: () => {
+            reset();
+            onClose?.();
+          },
+        }
+      );
+    } else {
+      createPerson(
+        { ...data },
+        {
+          onSuccess: () => {
+            reset();
+            onClose?.();
+          },
+        }
+      );
+    }
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -41,20 +62,37 @@ const PersonForm: React.FC<Props> = ({ person = {}, onClose }) => {
           <Input
             id="firstName"
             autoFocus
+            error={!!errors.first_name}
             {...register("first_name", { required: true })}
           />
+          <FormHelperText>{errors.first_name?.message}</FormHelperText>
         </FormControl>
         <FormControl sx={{ backgroundColor: "primary.light" }}>
           <InputLabel htmlFor="lastName">Last Name*</InputLabel>
-          <Input id="lastName" {...register("last_name", { required: true })} />
+          <Input
+            id="lastName"
+            error={!!errors.last_name}
+            {...register("last_name", { required: true })}
+          />
+          <FormHelperText>{errors.last_name?.message}</FormHelperText>
         </FormControl>
         <FormControl sx={{ backgroundColor: "primary.light" }}>
           <InputLabel htmlFor="meliCode">Meli Code*</InputLabel>
-          <Input id="meliCode" {...register("meli_code", { required: true })} />
+          <Input
+            id="meliCode"
+            error={!!errors.meli_code}
+            {...register("meli_code", { required: true })}
+          />
+          <FormHelperText>{errors.meli_code?.message}</FormHelperText>
         </FormControl>
         <FormControl sx={{ backgroundColor: "primary.light" }}>
           <InputLabel htmlFor="phoneNumber">Phone Number</InputLabel>
-          <Input id="phoneNumber" {...register("phone_number")} />
+          <Input
+            error={!!errors.phone_number}
+            id="phoneNumber"
+            {...register("phone_number")}
+          />
+          <FormHelperText>{errors.phone_number?.message}</FormHelperText>
         </FormControl>
         <Divider sx={{ height: 25 }} />
         <Button
@@ -62,7 +100,7 @@ const PersonForm: React.FC<Props> = ({ person = {}, onClose }) => {
           sx={{ backgroundColor: "secondary.main" }}
           type="reset"
           onClick={() => onClose?.()}
-          disabled={isCreating}
+          disabled={isLoading}
         >
           Cancel
         </Button>
@@ -70,7 +108,7 @@ const PersonForm: React.FC<Props> = ({ person = {}, onClose }) => {
           variant="contained"
           sx={{ backgroundColor: "secondary.main" }}
           type="submit"
-          disabled={isCreating}
+          disabled={isLoading}
         >
           Create
         </Button>
@@ -79,4 +117,4 @@ const PersonForm: React.FC<Props> = ({ person = {}, onClose }) => {
   );
 };
 
-export default PersonForm;
+export default SaleForm;

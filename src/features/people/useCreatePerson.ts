@@ -2,14 +2,16 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-hot-toast";
 import { insertPerson } from "../../APIs/peopleAPI";
 
-export function useCreatePerson() {
+export default function useCreatePerson() {
   const queryClient = useQueryClient();
 
   const { mutate: createPerson, isPending: isCreating } = useMutation({
     mutationFn: insertPerson,
     onSuccess: () => {
       toast.success("Person Created Successfully");
-      queryClient.invalidateQueries({ queryKey: ["people","owners","buyers","renters"] });
+      queryClient.invalidateQueries({
+        queryKey: ["people", "owners", "buyers", "renters"],
+      });
     },
     onError: (err) => toast.error(err.message),
   });

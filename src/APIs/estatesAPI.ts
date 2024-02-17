@@ -22,10 +22,14 @@ export async function getEstate(id: number) {
   return renters;
 }
 
-export async function insertEstate(newEstate: Omit<Estate, "id"|"registration_date">) {
+export async function insertEstate(
+  newEstate: Omit<Estate, "id" | "registration_date">
+) {
   await myNodeJSServer.insertEstate(newEstate);
 }
-export async function updateEstate(updatedEstate: Estate) {
+export async function updateEstate(
+  updatedEstate: Omit<Estate, "registration_date">
+) {
   await myNodeJSServer.updateEstate(updatedEstate);
 }
 export async function deleteEstate(id: number) {

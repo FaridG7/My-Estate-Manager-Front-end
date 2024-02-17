@@ -9,7 +9,9 @@ export default function useCreateEstate() {
     mutationFn: insertEstate,
     onSuccess: () => {
       toast.success("Estate Created Successfully");
-      queryClient.invalidateQueries({ queryKey: ["estates"] });
+      queryClient.invalidateQueries({
+        queryKey: ["idleEstates", "soldEstates", "rentedEstate"],
+      });
     },
     onError: (err) => toast.error(err.message),
   });

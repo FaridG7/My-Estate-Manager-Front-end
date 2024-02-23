@@ -10,6 +10,7 @@ import {
   Input,
   InputLabel,
   MenuItem,
+  Stack,
   Table,
   TableBody,
   TableCell,
@@ -97,200 +98,293 @@ const EstateForm: React.FC<Props> = ({ estate, onClose }) => {
     );
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <FormGroup>
-        <FormControl sx={{ backgroundColor: "primary.light" }}>
-          <InputLabel htmlFor="propertyId">Title*</InputLabel>
-          <Input
-            id="propertyId"
-            autoFocus
-            {...register("property_id", { required: true })}
-            error={!!errors.property_id}
-          />
-          <FormHelperText>{errors.property_id?.message}</FormHelperText>
-        </FormControl>
-        <FormControl sx={{ backgroundColor: "primary.light" }}>
-          <Autocomplete
-            disableListWrap
-            options={people ?? []}
-            getOptionLabel={(option) =>
-              `${option.first_name} ${option.last_name}`
-            }
-            {...register("owner_id", { required: true })}
-            renderOption={(props, option) => (
-              <li {...props}>
-                <TableContainer>
-                  <Table size="small" aria-label="a dense table">
-                    <TableBody>
-                      <TableRow
-                        key={option.id}
-                        sx={{
-                          "&:last-child td, &:last-child th": { border: 0 },
-                        }}
-                      >
-                        <TableCell component="th" scope="row">
-                          {`${option.first_name} ${option.last_name}`}
-                        </TableCell>
-                        <TableCell align="right">{option.meli_code}</TableCell>
-                      </TableRow>
-                    </TableBody>
-                  </Table>
-                </TableContainer>
-              </li>
-            )}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                label="Choose the owner"
-                error={!!errors.owner_id}
-                helperText={errors.owner_id?.message}
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      style={{ display: "flex", width: "100%" }}
+    >
+      <Stack direction="column" width="100%">
+        <Typography variant="h3" mx="auto" justifySelf="center">
+          Create Estate Form
+        </Typography>
+        <FormGroup sx={{ gap: 1, padding: 5 }}>
+          <Stack direction="row" gap={{ xs: 5, sm: 10 }}>
+            <FormControl
+              sx={{
+                backgroundColor: "primary.light",
+                width: "auto",
+                minWidth: "45%",
+              }}
+            >
+              <InputLabel htmlFor="propertyId">Title*</InputLabel>
+              <Input
+                id="propertyId"
+                autoFocus
+                {...register("property_id", { required: true })}
+                error={!!errors.property_id}
               />
-            )}
-          />
-        </FormControl>
-        <FormControl sx={{ backgroundColor: "primary.light" }}>
-          <InputLabel htmlFor="address">Address</InputLabel>
-          <Input
-            id="address"
-            {...register("address")}
-            error={!!errors.property_id}
-          />
-          <FormHelperText>{errors.address?.message}</FormHelperText>
-        </FormControl>
-        <FormControl sx={{ backgroundColor: "primary.light" }}>
-          <InputLabel htmlFor="geo_location">Geo Location</InputLabel>
-          <Input
-            id="geo_location"
-            {...register("geo_location")}
-            error={!!errors.property_id}
-          />
-          <FormHelperText>{errors.geo_location?.message}</FormHelperText>
-        </FormControl>
-        <FormControl sx={{ backgroundColor: "primary.light" }}>
-          <TextField
-            id="type"
-            select
-            {...register("type", { required: true })}
-            label="Type*"
-            error={!!errors.type}
-            helperText={errors.type?.message}
-          >
-            {typeOptions.map((option) => (
-              <MenuItem key={option.value} value={option.value}>
-                {option.lable}
-              </MenuItem>
-            ))}
-          </TextField>
-        </FormControl>
-        <FormControl sx={{ backgroundColor: "primary.light" }}>
-          <TextField
-            id="for"
-            select
-            {...register("for", { required: true })}
-            label="For*"
-            error={!!errors.for}
-            helperText={errors.for?.message}
-          >
-            {forOptions.map((option) => (
-              <MenuItem key={option.value} value={option.value}>
-                {option.lable}
-              </MenuItem>
-            ))}
-          </TextField>
-        </FormControl>
-        <FormControl sx={{ backgroundColor: "primary.light" }}>
-          <InputLabel htmlFor="area">Area*</InputLabel>
-          <Input
-            id="area"
-            type="number"
-            error={!!errors.property_id}
-            {...register("area", {
-              required: true,
-              min: {
-                value: 1,
-                message: "Area should be at least 1",
-              },
-            })}
-          />
-          <FormHelperText>{errors.area?.message}</FormHelperText>
-        </FormControl>
-        <FormControl sx={{ backgroundColor: "primary.light" }}>
-          <InputLabel htmlFor="room_count">Room Count*</InputLabel>
-          <Input
-            id="room_count"
-            type="number"
-            error={!!errors.property_id}
-            {...register("room_count", {
-              required: true,
-              min: {
-                value: 1,
-                message: "Room Count should be at least 1",
-              },
-            })}
-          />
-          <FormHelperText>{errors.room_count?.message}</FormHelperText>
-        </FormControl>
-        <FormControl sx={{ backgroundColor: "primary.light" }}>
-          <TextField
-            id="description"
-            type="number"
-            {...register("description")}
-            label="Description"
-            error={!!errors.description}
-            helperText={errors.description?.message}
-          />
-        </FormControl>
-        <FormControl sx={{ backgroundColor: "primary.light" }}>
-          <InputLabel htmlFor="price">Price</InputLabel>
-          <Input
-            id="price"
-            type="number"
-            {...register("price")}
-            error={!!errors.property_id}
-          />
-          <FormHelperText>{errors.price?.message}</FormHelperText>
-        </FormControl>
-        <FormControl sx={{ backgroundColor: "primary.light" }}>
-          <InputLabel htmlFor="mortgage">Mortgage</InputLabel>
-          <Input
-            id="mortgage"
-            type="number"
-            {...register("mortgage")}
-            error={!!errors.property_id}
-          />
-          <FormHelperText>{errors.mortgage?.message}</FormHelperText>
-        </FormControl>
-        <FormControl sx={{ backgroundColor: "primary.light" }}>
-          <InputLabel htmlFor="rent">Rent</InputLabel>
-          <Input
-            id="rent"
-            type="number"
-            {...register("rent")}
-            error={!!errors.property_id}
-          />
-          <FormHelperText>{errors.rent?.message}</FormHelperText>
-        </FormControl>
+              <FormHelperText>{errors.property_id?.message}</FormHelperText>
+            </FormControl>
+            <FormControl
+              sx={{
+                backgroundColor: "primary.light",
+                width: "auto",
+                minWidth: "45%",
+              }}
+            >
+              <Autocomplete
+                disableListWrap
+                options={people ?? []}
+                getOptionLabel={(option) =>
+                  `${option.first_name} ${option.last_name}`
+                }
+                {...register("owner_id", { required: true })}
+                renderOption={(props, option) => (
+                  <li {...props}>
+                    <TableContainer>
+                      <Table size="small" aria-label="a dense table">
+                        <TableBody>
+                          <TableRow
+                            key={option.id}
+                            sx={{
+                              "&:last-child td, &:last-child th": { border: 0 },
+                            }}
+                          >
+                            <TableCell component="th" scope="row">
+                              {`${option.first_name} ${option.last_name}`}
+                            </TableCell>
+                            <TableCell align="right">
+                              {option.meli_code}
+                            </TableCell>
+                          </TableRow>
+                        </TableBody>
+                      </Table>
+                    </TableContainer>
+                  </li>
+                )}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    label="Choose the owner"
+                    error={!!errors.owner_id}
+                    helperText={errors.owner_id?.message}
+                  />
+                )}
+              />
+            </FormControl>
+          </Stack>
+          <Stack direction="row" gap={{ xs: 5, sm: 10 }}>
+            <FormControl
+              sx={{
+                backgroundColor: "primary.light",
+                width: "auto",
+                minWidth: "45%",
+              }}
+            >
+              <InputLabel htmlFor="address">Address</InputLabel>
+              <Input
+                id="address"
+                {...register("address")}
+                error={!!errors.property_id}
+              />
+              <FormHelperText>{errors.address?.message}</FormHelperText>
+            </FormControl>
+            <FormControl
+              sx={{
+                backgroundColor: "primary.light",
+                width: "auto",
+                minWidth: "45%",
+              }}
+            >
+              <InputLabel htmlFor="geo_location">Geo Location</InputLabel>
+              <Input
+                id="geo_location"
+                {...register("geo_location")}
+                error={!!errors.property_id}
+              />
+              <FormHelperText>{errors.geo_location?.message}</FormHelperText>
+            </FormControl>
+          </Stack>
 
-        <Divider sx={{ height: 25 }} />
+          <Stack direction="row" gap={{ xs: 5, sm: 10 }}>
+            <FormControl
+              sx={{
+                backgroundColor: "primary.light",
+                width: "auto",
+                minWidth: "45%",
+              }}
+            >
+              <TextField
+                id="type"
+                select
+                {...register("type", { required: true })}
+                label="Type*"
+                error={!!errors.type}
+                helperText={errors.type?.message}
+              >
+                {typeOptions.map((option) => (
+                  <MenuItem key={option.value} value={option.value}>
+                    {option.lable}
+                  </MenuItem>
+                ))}
+              </TextField>
+            </FormControl>
+            <FormControl
+              sx={{
+                backgroundColor: "primary.light",
+                width: "auto",
+                minWidth: "45%",
+              }}
+            >
+              <TextField
+                id="for"
+                select
+                {...register("for", { required: true })}
+                label="For*"
+                error={!!errors.for}
+                helperText={errors.for?.message}
+              >
+                {forOptions.map((option) => (
+                  <MenuItem key={option.value} value={option.value}>
+                    {option.lable}
+                  </MenuItem>
+                ))}
+              </TextField>
+            </FormControl>
+          </Stack>
+          <Stack direction="row" gap={{ xs: 5, sm: 10 }}>
+            <FormControl
+              sx={{
+                backgroundColor: "primary.light",
+                width: "auto",
+                minWidth: "45%",
+              }}
+            >
+              <InputLabel htmlFor="area">Area*</InputLabel>
+              <Input
+                id="area"
+                type="number"
+                error={!!errors.property_id}
+                {...register("area", {
+                  required: true,
+                  min: {
+                    value: 1,
+                    message: "Area should be at least 1",
+                  },
+                })}
+              />
+              <FormHelperText>{errors.area?.message}</FormHelperText>
+            </FormControl>
+            <FormControl
+              sx={{
+                backgroundColor: "primary.light",
+                width: "auto",
+                minWidth: "45%",
+              }}
+            >
+              <InputLabel htmlFor="room_count">Room Count*</InputLabel>
+              <Input
+                id="room_count"
+                type="number"
+                error={!!errors.property_id}
+                {...register("room_count", {
+                  required: true,
+                  min: {
+                    value: 1,
+                    message: "Room Count should be at least 1",
+                  },
+                })}
+              />
+              <FormHelperText>{errors.room_count?.message}</FormHelperText>
+            </FormControl>
+          </Stack>
+          <Stack direction="row" gap={{ xs: 2, sm: 5 }}>
+            <FormControl
+              sx={{
+                backgroundColor: "primary.light",
+                width: "auto",
+                minWidth: "30%",
+              }}
+            >
+              <InputLabel htmlFor="price">Price</InputLabel>
+              <Input
+                id="price"
+                type="number"
+                {...register("price")}
+                error={!!errors.property_id}
+              />
+              <FormHelperText>{errors.price?.message}</FormHelperText>
+            </FormControl>
+            <FormControl
+              sx={{
+                backgroundColor: "primary.light",
+                width: "auto",
+                minWidth: "30%",
+              }}
+            >
+              <InputLabel htmlFor="mortgage">Mortgage</InputLabel>
+              <Input
+                id="mortgage"
+                type="number"
+                {...register("mortgage")}
+                error={!!errors.property_id}
+              />
+              <FormHelperText>{errors.mortgage?.message}</FormHelperText>
+            </FormControl>
+            <FormControl
+              sx={{
+                backgroundColor: "primary.light",
+                width: "auto",
+                minWidth: "30%",
+              }}
+            >
+              <InputLabel htmlFor="rent">Rent</InputLabel>
+              <Input
+                id="rent"
+                type="number"
+                {...register("rent")}
+                error={!!errors.property_id}
+              />
+              <FormHelperText>{errors.rent?.message}</FormHelperText>
+            </FormControl>
+          </Stack>
+          <FormControl
+            sx={{
+              backgroundColor: "primary.light",
+              width: "auto",
+              maxWidth: { xs: "none", sm: "95%" },
+            }}
+          >
+            <TextField
+              id="description"
+              {...register("description")}
+              label="Description"
+              error={!!errors.description}
+              helperText={errors.description?.message}
+            />
+          </FormControl>
 
-        <Button
-          variant="contained"
-          sx={{ backgroundColor: "secondary.main" }}
-          type="reset"
-          onClick={() => onClose?.()}
-          disabled={isLoading}
-        >
-          Cancel
-        </Button>
-        <Button
-          variant="contained"
-          sx={{ backgroundColor: "secondary.main" }}
-          type="submit"
-          disabled={isLoading}
-        >
-          Create
-        </Button>
-      </FormGroup>
+          <Divider sx={{ height: 25 }} />
+          <Stack direction="row" gap={1}>
+            <Button
+              variant="contained"
+              sx={{ backgroundColor: "secondary.main" }}
+              type="reset"
+              onClick={() => onClose?.()}
+              disabled={isLoading}
+            >
+              Cancel
+            </Button>
+            <Button
+              variant="contained"
+              sx={{ backgroundColor: "secondary.main" }}
+              type="submit"
+              disabled={isLoading}
+            >
+              Create
+            </Button>
+          </Stack>
+        </FormGroup>
+      </Stack>
     </form>
   );
 };

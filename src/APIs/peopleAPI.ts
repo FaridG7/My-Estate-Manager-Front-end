@@ -6,6 +6,11 @@ export async function getPeople() {
 
   return people;
 }
+export async function getNonUsedPeople() {
+  const people = await myNodeJSServer.getNonUsedPeople();
+
+  return people;
+}
 export async function getOwners() {
   const owners = await myNodeJSServer.getOwners();
 

@@ -16,10 +16,10 @@ const columns: GridColDef[] = [
 ];
 
 const PeopleTable: React.FC = () => {
-  const [activeButton, setActiveButton] = useState<1 | 2 | 3>(1);
-  const { isLoading, owners, buyers, renters } = usePeople();
+  const [activeButton, setActiveButton] = useState<1 | 2 | 3 | 4>(1);
+  const { isLoading, owners, buyers, renters, nonUsedPeople } = usePeople();
   const nav = useNavigate();
-  const rows = [owners, buyers, renters];
+  const rows = [owners, buyers, renters, nonUsedPeople];
   const handleRowClick: GridEventListener<"rowClick"> | undefined = (e) => {
     nav(`${e.id}`);
   };
@@ -60,6 +60,14 @@ const PeopleTable: React.FC = () => {
           variant={activeButton === 3 ? "contained" : "outlined"}
           onClick={() => {
             setActiveButton(3);
+          }}
+        >
+          Renters
+        </Button>
+        <Button
+          variant={activeButton === 4 ? "contained" : "outlined"}
+          onClick={() => {
+            setActiveButton(4);
           }}
         >
           Renters

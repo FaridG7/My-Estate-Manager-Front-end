@@ -82,6 +82,21 @@ class myServer {
     const people = (await response.json()) as Person[];
     return people;
   }
+  public async getNonUsedPeople() {
+    const response = await fetch(this.baseUrl + "/nonUsed", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+
+    if (!response.ok) {
+      throw Error(`Failed to get data, status: ${response.status}`);
+    }
+    const nonUsedPeople = (await response.json()) as Person[];
+    return nonUsedPeople;
+  }
   public async getOwners() {
     const response = await fetch(this.baseUrl + "/people/owners", {
       method: "GET",

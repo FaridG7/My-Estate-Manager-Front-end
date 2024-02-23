@@ -61,15 +61,15 @@ const SideBarList: React.FC = () => {
       </ListItemButton>
       <Collapse in={contractItem} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
-          <NavLink to="/contracts/rent" style={{ textDecoration: "none" }}>
+          <NavLink to="/contracts/sale" style={{ textDecoration: "none" }}>
             <ListItemButton  sx={{ pl: 4 }}>
               <ListItemIcon>
                 <SellIcon />
               </ListItemIcon>
-              <ListItemText primary="Sell Contracts" />
+              <ListItemText primary="Sale Contracts" />
             </ListItemButton>
           </NavLink>
-          <NavLink to="/contracts/sale" style={{ textDecoration: "none" }}>
+          <NavLink to="/contracts/rent" style={{ textDecoration: "none" }}>
             <ListItemButton  sx={{ pl: 4 }}>
               <ListItemIcon>
                 <HandshakeIcon />

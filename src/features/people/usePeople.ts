@@ -7,7 +7,7 @@ import {
 } from "../../APIs/peopleAPI";
 
 function usePeople() {
-  const { isLoading: isLoading1, data: people } = useQuery({
+  const { isLoading: isLoading1, data: nonUsedPeople } = useQuery({
     queryKey: ["people"],
     queryFn: getPeople,
   });
@@ -25,10 +25,10 @@ function usePeople() {
   });
   return {
     isLoading: isLoading1 || isLoading2 || isLoading3 || isLoading4,
-    people,
     owners,
     buyers,
     renters,
+    nonUsedPeople
   };
 }
 export default usePeople;

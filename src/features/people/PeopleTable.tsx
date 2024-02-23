@@ -70,7 +70,7 @@ const PeopleTable: React.FC = () => {
             setActiveButton(4);
           }}
         >
-          Renters
+          NonUsed People
         </Button>
       </ButtonGroup>
       <Divider sx={{ height: 25 }} />

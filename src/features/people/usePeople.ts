@@ -2,14 +2,14 @@ import { useQuery } from "@tanstack/react-query";
 import {
   getBuyers,
   getOwners,
-  getPeople,
+  getNonUsedPeople,
   getRenters,
 } from "../../APIs/peopleAPI";
 
 function usePeople() {
   const { isLoading: isLoading1, data: nonUsedPeople } = useQuery({
-    queryKey: ["people"],
-    queryFn: getPeople,
+    queryKey: ["nonused_people"],
+    queryFn: getNonUsedPeople,
   });
   const { isLoading: isLoading2, data: owners } = useQuery({
     queryKey: ["owners"],
@@ -28,7 +28,7 @@ function usePeople() {
     owners,
     buyers,
     renters,
-    nonUsedPeople
+    nonUsedPeople,
   };
 }
 export default usePeople;

@@ -3,7 +3,7 @@ import { getCurrentUser } from "../../APIs/authAPI";
 
 export function useManager() {
   const { isLoading, data: manager } = useQuery({
-    queryKey: ["userManager", "token"],
+    queryKey: ["token"],
     queryFn: getCurrentUser,
   });
 

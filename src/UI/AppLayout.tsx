@@ -45,6 +45,7 @@ const AppLayout: React.FC = () => {
       <Box
         sx={{
           minHeight: "500px",
+          padding: 2,
         }}
       >
         <Outlet />

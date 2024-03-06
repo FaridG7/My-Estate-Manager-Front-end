@@ -6,19 +6,19 @@ import useRentContracts from "./useRentContracts";
 import { useNavigate } from "react-router-dom";
 
 const columns: GridColDef[] = [
-  { field: "id", headerName: "ID", width: 80, type: "number" },
-  { field: "contract_id", headerName: "Title", width: 150 },
-  { field: "estate_id", headerName: "Estate", width: 120, type: "number" },
+  { field: "id", headerName: "ID", flex: 80, type: "number" },
+  { field: "contract_id", headerName: "Title", flex: 150 },
+  { field: "estate_id", headerName: "Estate", flex: 120, type: "number" },
   {
     field: "commission_fee",
     headerName: "Commission Fee",
-    width: 100,
+    flex: 100,
     type: "number",
   },
-  { field: "start_date", headerName: "Start Date", width: 100, type: "date" },
-  { field: "expire_date", headerName: "Expire Date", width: 100, type: "date" },
-  { field: "mortgage", headerName: "Mortgage", width: 130, type: "number" },
-  { field: "rent", headerName: "Rent", width: 130, type: "number" },
+  { field: "start_date", headerName: "Start Date", flex: 100, type: "date" },
+  { field: "expire_date", headerName: "Expire Date", flex: 100, type: "date" },
+  { field: "mortgage", headerName: "Mortgage", flex: 130, type: "number" },
+  { field: "rent", headerName: "Rent", flex: 130, type: "number" },
 ];
 
 const RentContractsTable: React.FC = () => {

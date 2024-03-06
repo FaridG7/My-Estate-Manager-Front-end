@@ -83,7 +83,7 @@ class myServer {
     return people;
   }
   public async getNonUsedPeople() {
-    const response = await fetch(this.baseUrl + "/nonUsed", {
+    const response = await fetch(this.baseUrl + "/people/nonUsed", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

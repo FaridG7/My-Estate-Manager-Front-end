@@ -14,16 +14,16 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 const columns: GridColDef[] = [
-  { field: "id", headerName: "ID", width: 80, type: "number" },
-  { field: "property_id", headerName: "Peoperty ID", width: 120 },
-  { field: "type", headerName: "Type", width: 120 },
-  { field: "area", headerName: "Area", width: 100, type: "number" },
-  { field: "room_count", headerName: "Room Count", width: 100, type: "number" },
-  { field: "for", headerName: "For", width: 70 },
-  { field: "price", headerName: "Price", width: 100, type: "number" },
-  { field: "mortgage", headerName: "Mortgage", width: 130, type: "number" },
-  { field: "rent", headerName: "Rent", width: 130, type: "number" },
-  { field: "registration_date", headerName: "Created At", width: 120 },
+  { field: "id", headerName: "ID", flex: 50, type: "number" },
+  { field: "property_id", headerName: "Peoperty ID", flex: 120 },
+  { field: "type", headerName: "Type", flex: 120 },
+  { field: "area", headerName: "Area", flex: 100, type: "number" },
+  { field: "room_count", headerName: "Room Count", flex: 100, type: "number" },
+  { field: "for", headerName: "For", flex: 100 },
+  { field: "price", headerName: "Price", flex: 100, type: "number" },
+  { field: "mortgage", headerName: "Mortgage", flex: 130, type: "number" },
+  { field: "rent", headerName: "Rent", flex: 130, type: "number" },
+  { field: "registration_date", headerName: "Created At", flex: 120 },
 ];
 
 const EstatesTable: React.FC = () => {

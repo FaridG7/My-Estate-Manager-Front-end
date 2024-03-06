@@ -10,7 +10,14 @@ export default function useEditPerson() {
     onSuccess: () => {
       toast.success("Person Edited Successfully");
       queryClient.invalidateQueries({
-        queryKey: ["people", "owners", "buyers", "renters", "person"],
+        queryKey: [
+          "people",
+          "owners",
+          "buyers",
+          "renters",
+          "person",
+          "nonused_people",
+        ],
       });
     },
     onError: (err) => toast.error(err.message),

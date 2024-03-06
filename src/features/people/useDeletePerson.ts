@@ -9,7 +9,7 @@ export default function useDeletePerson() {
     onSuccess: () => {
       toast.success("Person Deleted Successfully");
       queryClient.invalidateQueries({
-        queryKey: ["people", "owners", "buyers", "renters", "person"],
+        queryKey: ["people", "owners", "buyers", "renters", "person","nonused_people"],
       });
     },
     onError: (err) => toast.error(err.message),

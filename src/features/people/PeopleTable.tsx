@@ -8,11 +8,16 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 const columns: GridColDef[] = [
-  { field: "id", headerName: "ID", width: 80, type: "number" },
-  { field: "first_name", headerName: "First name", width: 150 },
-  { field: "last_name", headerName: "Last name", width: 150 },
-  { field: "meli_code", headerName: "Meli Code", width: 150 },
-  { field: "phone_number", headerName: "Phone Number", width: 150 },
+  {
+    field: "id",
+    headerName: "ID",
+    flex: 0.12,
+    type: "number",
+  },
+  { field: "first_name", headerName: "First name", flex: 0.22 },
+  { field: "last_name", headerName: "Last name", flex: 0.22 },
+  { field: "meli_code", headerName: "Meli Code", flex: 0.22 },
+  { field: "phone_number", headerName: "Phone Number", flex: 0.22 },
 ];
 
 const PeopleTable: React.FC = () => {

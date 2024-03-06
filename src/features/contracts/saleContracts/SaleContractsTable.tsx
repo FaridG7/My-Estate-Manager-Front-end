@@ -6,17 +6,17 @@ import useSaleContracts from "./useSaleContracts";
 import { useNavigate } from "react-router-dom";
 
 const columns: GridColDef[] = [
-  { field: "id", headerName: "ID", width: 80, type: "number" },
-  { field: "contract_id", headerName: "Title", width: 150 },
-  { field: "estate_id", headerName: "Estate", width: 120, type: "number" },
+  { field: "id", headerName: "ID", flex: 80, type: "number" },
+  { field: "contract_id", headerName: "Title", flex: 150 },
+  { field: "estate_id", headerName: "Estate", flex: 120, type: "number" },
   {
     field: "commission_fee",
     headerName: "Commission Fee",
-    width: 100,
+    flex: 100,
     type: "number",
   },
-  { field: "sale_date", headerName: "Sale Date", width: 100, type: "date" },
-  { field: "price", headerName: "Price", width: 130, type: "number" },
+  { field: "sale_date", headerName: "Sale Date", flex: 100, type: "date" },
+  { field: "price", headerName: "Price", flex: 130, type: "number" },
 ];
 
 const SaleContractsTable: React.FC = () => {

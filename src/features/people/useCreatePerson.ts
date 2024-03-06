@@ -10,7 +10,7 @@ export default function useCreatePerson() {
     onSuccess: () => {
       toast.success("Person Created Successfully");
       queryClient.invalidateQueries({
-        queryKey: ["people", "owners", "buyers", "renters"],
+        queryKey: ["people", "nonused_people"],
       });
     },
     onError: (err) => toast.error(err.message),

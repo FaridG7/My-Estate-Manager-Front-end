@@ -10,7 +10,7 @@ type Props = {
 
 const Table: React.FC<Props> = ({ rows, columns, handleRowClick }) => {
   return (
-    <Box sx={{ height: "100%", width: "100%", padding: 3 }}>
+    <Box sx={{ height: "100%", width: "100%", border: 2, mb: 2 }}>
       <DataGrid
         rows={rows}
         columns={columns}
@@ -21,7 +21,15 @@ const Table: React.FC<Props> = ({ rows, columns, handleRowClick }) => {
           },
         }}
         pageSizeOptions={[5, 10]}
-        sx={{ height: "100%" }}
+        sx={{
+          width: "100%",
+          height: "100%",
+          "& .MuiDataGrid-columnHeader": {
+            backgroundColor: "secondary.main",
+            color: "white",
+            width: "100%",
+          },
+        }}
       />
     </Box>
   );
